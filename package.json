@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ErykDarnowski/game-discount-checker/issues"
   },
-  "homepage": "https://github.com/ErykDarnowski/game-discount-checker#readme"
+  "homepage": "https://github.com/ErykDarnowski/game-discount-checker#readme",
+  "dependencies": {
+    "puppeteer": "^13.5.2"
+  }
 }
