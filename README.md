@@ -17,11 +17,11 @@ npm install
 
 ### TOOD
 
-- [ ] put funcs and some vars in to the app.js file and import them to other ones
 - [ ] sort table by prices
 - [ ] choose between request / node-fetch packages
 - [ ] higlight lower prices / discounts in console (coloring)
-- [X] print table in console [table](https://www.npmjs.com/package/table) ; [easy-table](https://www.npmjs.com/package/easy-table) / do it as a website?
+- [ ] put funcs and some vars in to the app.js file and import them to other ones
+- [X] print table in console [easy-table](https://www.npmjs.com/package/easy-table)
 
 ---
 
