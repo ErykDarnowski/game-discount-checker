@@ -17,12 +17,6 @@ npm install
 
 ### TOOD
 
-- [X] get prices from:
-  - [X] GOG
-  - [X] Epic
-  - [X] Steam
-  - [X] Microsoft
-
 - [ ] put funcs and some vars in to the app.js file and import them to other ones
 - [ ] func for calcualting discount percent
 - [ ] round % of discount?
