@@ -18,6 +18,7 @@
   "homepage": "https://github.com/ErykDarnowski/game-discount-checker#readme",
   "dependencies": {
     "node-fetch": "^2.6.6",
-    "puppeteer": "^13.5.2"
+    "puppeteer": "^13.5.2",
+    "table": "^6.8.0"
   }
 }

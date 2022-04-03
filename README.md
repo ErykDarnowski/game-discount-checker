@@ -17,14 +17,19 @@ npm install
 
 ### TOOD
 
-- [ ] get prices from:
-  - [ ] GOG
-  - [ ] Epic
-  - [ ] Steam
-  - [ ] Microsoft
+- [X] get prices from:
+  - [X] GOG
+  - [X] Epic
+  - [X] Steam
+  - [X] Microsoft
 
-- [ ] compare to usual prices
-- [ ] higlight lower prices / discounts in console
+- [ ] put funcs and some vars in to the app.js file and import them to other ones
+- [ ] func for calcualting discount percent
+- [ ] round % of discount?
+- [ ] sort table by prices
+- [ ] choose between request / node-fetch packages
+- [ ] higlight lower prices / discounts in console (coloring)
+- [X] print table in console [table](https://www.npmjs.com/package/table) ; [easy-table](https://www.npmjs.com/package/easy-table) / do it as a website?
 
 ---
 
