@@ -51,9 +51,9 @@ async function scrape(microsoftUrl) {
     } else {
         var basePrice = formatPriceToFloat(priceEl.split(" zł")[0]);
         var discountPrice = formatPriceToFloat(priceEl.split(" zł")[1]);
-        var discountPercent = (100 - ((discountPrice * 100) / basePrice)).toFixed(2);
+        var discountPercent = Math.round(100 - ((discountPrice * 100) / basePrice));
 
-        console.log(basePrice + " -> " + discountPrice + " = -" + discountPercent + "%");
+        console.log(basePrice + "zł -> " + discountPrice + "zł = -" + discountPercent + "%");
     };
 
 

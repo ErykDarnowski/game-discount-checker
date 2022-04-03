@@ -63,7 +63,7 @@ async function scrape(gogUrl) {
         // Getting specified data:
         var basePrice = formatPrice(priceOverwiew['basePrice'].replace(" PLN", ""));
         var discountPrice = formatPrice(priceOverwiew['finalPrice'].replace(" PLN", ""));
-        var discountPercent = (100 - ((discountPrice * 100) / basePrice)).toFixed(2);
+        var discountPercent = Math.round(100 - ((discountPrice * 100) / basePrice));
 
         // Checking if discount:
         if (discountPercent == 0.00) {

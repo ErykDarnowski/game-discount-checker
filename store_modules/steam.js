@@ -27,6 +27,6 @@ fetch(apiUrl, { method: "GET" }).then(res => res.json()).then((json) => {
     if (discountPercent == 0) {
         console.log(basePrice + "zł");
     } else {
-        console.log(basePrice + "zł -> " + discountPrice + "zł = " + discountPercent + "%");
+        console.log(basePrice + "zł -> " + discountPrice + "zł = -" + discountPercent + "%");
     };
 });

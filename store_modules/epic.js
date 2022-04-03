@@ -52,7 +52,7 @@ async function scrape(epicUrl) {
         var discountPrice = formatPriceToFloat(priceLayout.split("\n")[2].replace(" zł", ""));
         var discountPercent = formatPriceToFloat(priceLayout.split("\n")[0]);
         
-        console.log(basePrice + "zł -> " + discountPrice + "zł = " + discountPercent + "%");
+        console.log(basePrice + "zł -> " + discountPrice + "zł = -" + discountPercent + "%");
     };
 
     browser.close();
