@@ -17,12 +17,19 @@ npm install
 
 ### TOOD
 
+- [ ] store icons
+- [ ] json config file
+- [ ] diff region support
 - [ ] sort table by prices
+- [ ] name change (discounter / discountfetch)
+- [ ] <https://github.com/LvChengbin/cli-style>?
 - [ ] choose between request / node-fetch packages
 - [ ] higlight lower prices / discounts in console (coloring)
 - [ ] put funcs and some vars in to the app.js file and import them to other ones
-- [X] print table in console [easy-table](https://www.npmjs.com/package/easy-table)
+- [X] print table in console [easy-table](https://www.npmjs.com/package/easy-table) ; [cli-table](https://github.com/Automattic/cli-table) ; [console-table](https://github.com/LvChengbin/console-table)
 
 ---
 
 - [ ] refractor
+- [ ] test on Win, Mac and Linux
+- [ ] packages / install options on ^ OSs
