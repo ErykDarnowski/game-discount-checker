@@ -1,3 +1,26 @@
+/*
+// Something for microsoft store:
+var request = require('request');
+
+var url = "https://storeedgefd.dsx.mp.microsoft.com/v8.0/sdk/products?market=PL&locale=pl-PL&deviceFamily=Windows.Desktop";
+var data = {
+    json: {
+        productIds: '9pm6sjbmvqzl'
+    }
+};
+
+request.post(url, data, (error, response, body) => {
+        if (!error && response.statusCode == 200) {
+            console.log(body["Products"][0]);
+        };
+    };
+);
+*/
+
+
+
+
+
 // Adds "." before 2 numbers from end [example: 10799 -> 107.99]:
 function formatPrice(priceInt) {
     var priceArr = String(priceInt).split("");
@@ -7,6 +30,11 @@ function formatPrice(priceInt) {
 module.exports = {
     formatPrice
 };
+
+
+
+
+
 
 const { table } = require('table');
 
