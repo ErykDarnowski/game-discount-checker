@@ -32,6 +32,11 @@ function formatPriceToFloat(priceStr) {
     return parseFloat(priceStr.replace(",", "."));
 };
 
+// Calculates percent of discount:
+function calculateDiscountPercent(basePrice, discountPrice) {
+    return Math.round(100 - ((discountPrice * 100) / basePrice))
+};
+
 async function scrape(microsoftUrl) {
     const browser = await puppeteer.launch({});
     const page = await browser.newPage();
@@ -51,7 +56,7 @@ async function scrape(microsoftUrl) {
     } else {
         var basePrice = formatPriceToFloat(priceEl.split(" zł")[0]);
         var discountPrice = formatPriceToFloat(priceEl.split(" zł")[1]);
-        var discountPercent = Math.round(100 - ((discountPrice * 100) / basePrice));
+        var discountPercent = calculateDiscountPercent(basePrice, discountPrice);
 
         console.log(basePrice + "zł -> " + discountPrice + "zł = -" + discountPercent + "%");
     };

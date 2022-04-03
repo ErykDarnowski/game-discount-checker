@@ -45,6 +45,11 @@ function formatPrice(priceInt) {
     return parseFloat(priceArr.slice(0, (priceArr.length - 2)).join("") + "." + priceArr.slice((priceArr.length - 2), priceArr.length).join(""));
 };
 
+// Calculates percent of discount:
+function calculateDiscountPercent(basePrice, discountPrice) {
+    return Math.round(100 - ((discountPrice * 100) / basePrice))
+};
+
 async function scrape(gogUrl) {
     const browser = await puppeteer.launch({});
     const page = await browser.newPage();
@@ -63,10 +68,10 @@ async function scrape(gogUrl) {
         // Getting specified data:
         var basePrice = formatPrice(priceOverwiew['basePrice'].replace(" PLN", ""));
         var discountPrice = formatPrice(priceOverwiew['finalPrice'].replace(" PLN", ""));
-        var discountPercent = Math.round(100 - ((discountPrice * 100) / basePrice));
+        var discountPercent = calculateDiscountPercent(basePrice, discountPrice);
 
         // Checking if discount:
-        if (discountPercent == 0.00) {
+        if (discountPercent == 0) {
             console.log(basePrice + "zł");
         } else {
             console.log(basePrice + "zł -> " + discountPrice + "zł = -" + discountPercent + "%");

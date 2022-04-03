@@ -18,7 +18,6 @@ npm install
 ### TOOD
 
 - [ ] put funcs and some vars in to the app.js file and import them to other ones
-- [ ] func for calcualting discount percent
 - [ ] sort table by prices
 - [ ] choose between request / node-fetch packages
 - [ ] higlight lower prices / discounts in console (coloring)
