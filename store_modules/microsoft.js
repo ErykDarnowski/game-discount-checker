@@ -60,8 +60,7 @@ async function scrape(microsoftUrl) {
 
         console.log(basePrice + "zł -> " + discountPrice + "zł = -" + discountPercent + "%");
     };
-
-
+    
     browser.close();
 };
 

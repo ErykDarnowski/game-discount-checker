@@ -77,6 +77,8 @@ async function scrape(gogUrl) {
             console.log(basePrice + "zł -> " + discountPrice + "zł = -" + discountPercent + "%");
         };
     });
+
+    browser.close();
 };
 
 scrape(gogUrl);
