@@ -24,23 +24,13 @@ if (priceEl.split(" zł").length == 2) {
 
 
 // Import:
-const puppeteer = require('puppeteer');
+const common = require('../common.js');
 
 // Vars:
 var microsoftUrl = "https://www.xbox.com/pl-pl/games/store/martha-is-dead/9pm6sjbmvqzl";
 
-// Changes "," in price str to "." and formats it to a float:
-function formatPriceToFloat(priceStr) {
-    return parseFloat(priceStr.replace(",", "."));
-};
-
-// Calculates percent of discount:
-function calculateDiscountPercent(basePrice, discountPrice) {
-    return Math.round(100 - ((discountPrice * 100) / basePrice))
-};
-
 async function scrape(microsoftUrl) {
-    const browser = await puppeteer.launch({});
+    const browser = await common.puppeteer.launch({});
     const page = await browser.newPage();
     
     await page.setDefaultNavigationTimeout(0);
@@ -52,13 +42,13 @@ async function scrape(microsoftUrl) {
 
     // Check if discount:
     if (priceEl.split(" zł").length == 2) {
-        var basePrice = formatPriceToFloat(priceEl.split(" zł")[0]);
+        var basePrice = common.formatPriceToFloat(priceEl.split(" zł")[0]);
 
         console.log(basePrice + "zł");
     } else {
-        var basePrice = formatPriceToFloat(priceEl.split(" zł")[0]);
-        var discountPrice = formatPriceToFloat(priceEl.split(" zł")[1]);
-        var discountPercent = calculateDiscountPercent(basePrice, discountPrice);
+        var basePrice = common.formatPriceToFloat(priceEl.split(" zł")[0]);
+        var discountPrice = common.formatPriceToFloat(priceEl.split(" zł")[1]);
+        var discountPercent = common.calculateDiscountPercent(basePrice, discountPrice);
 
         console.log(basePrice + "zł -> " + discountPrice + "zł = -" + discountPercent + "%");
     };

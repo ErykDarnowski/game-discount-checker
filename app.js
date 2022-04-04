@@ -36,6 +36,7 @@ module.exports = {
 
 
 
+/*
 const { table } = require('table');
 
 const data = [
@@ -66,3 +67,4 @@ const config = {
 };
 
 console.log(table(data, config));
+*/
