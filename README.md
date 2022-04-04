@@ -21,8 +21,11 @@ npm install
 - [ ] json config file
 - [ ] diff region support
 - [ ] sort table by prices
+- [ ] add support for multiple games
+- [ ] compare prices based on discounts
 - [ ] name change (discounter / discountfetch)
 - [ ] <https://github.com/LvChengbin/cli-style>?
+- [ ] decide on license and change in package.json
 - [ ] choose between request / node-fetch packages
 - [ ] higlight lower prices / discounts in console (coloring)
 - [ ] put funcs and some vars in to the app.js file and import them to other ones
