@@ -21,22 +21,14 @@ request.post(url, data, (error, response, body) => {
 
 
 
-// Adds "." before 2 numbers from end [example: 10799 -> 107.99]:
-function formatPrice(priceInt) {
-    var priceArr = String(priceInt).split("");
-    return parseFloat(priceArr.slice(0, (priceArr.length - 2)).join("") + "." + priceArr.slice((priceArr.length - 2), priceArr.length).join(""));
-};
-
-module.exports = {
-    formatPrice
-};
 
 
 
 
 
 
-/*
+
+
 const { table } = require('table');
 
 const data = [
@@ -67,4 +59,3 @@ const config = {
 };
 
 console.log(table(data, config));
-*/

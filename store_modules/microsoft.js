@@ -1,28 +1,3 @@
-/*
-// Get price element:
-var priceEl = document.getElementsByClassName("CommonButtonStyles-module__multilineDesktopButton___Eht1V")[0].children[2].innerText;
-// document.querySelectorAll('.Price-module__srOnly___2mBg_')[0].innerText.replace("Oryginalna cena: ", "").replace("; cena na wyprzedaży ", "");
-
-// Changes "," in price str to "." and formats it to a float:
-function formatPriceToFloat(priceStr) {
-    return parseFloat(priceStr.replace(",", "."));
-};
-
-// Check if discount:
-if (priceEl.split(" zł").length == 2) {
-    var basePrice = formatPriceToFloat(priceEl.split(" zł")[0]);
-
-    console.log(basePrice + "zł");
-} else {
-    var basePrice = formatPriceToFloat(priceEl.split(" zł")[0]);
-    var discountPrice = formatPriceToFloat(priceEl.split(" zł")[1]);
-    var discountPercent = (100 - ((discountPrice * 100) / basePrice)).toFixed(2);
-
-    console.log(basePrice + " -> " + discountPrice + " = -" + discountPercent + "%");
-};
-*/
-
-
 // Import:
 const common = require('../common.js');
 
