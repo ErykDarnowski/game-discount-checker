@@ -23,8 +23,10 @@ if (priceEl.split(" zł").length == 2) {
 */
 
 
+// Import:
 const puppeteer = require('puppeteer');
 
+// Vars:
 var microsoftUrl = "https://www.xbox.com/pl-pl/games/store/martha-is-dead/9pm6sjbmvqzl";
 
 // Changes "," in price str to "." and formats it to a float:
