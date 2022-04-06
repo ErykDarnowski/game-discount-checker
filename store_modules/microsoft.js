@@ -1,10 +1,7 @@
-// Import:
+// Imports:
 const common = require('../common.js');
 
-// Vars:
-var microsoftUrl = "https://www.xbox.com/pl-pl/games/store/martha-is-dead/9pm6sjbmvqzl";
-
-async function scrape(microsoftUrl) {
+async function getPriceData(microsoftUrl) {
     const browser = await common.puppeteer.launch({});
     const page = await browser.newPage();
     
@@ -31,4 +28,6 @@ async function scrape(microsoftUrl) {
     browser.close();
 };
 
-scrape(microsoftUrl);
+//getPriceData(microsoftUrl);
+
+exports.getPriceData = getPriceData;

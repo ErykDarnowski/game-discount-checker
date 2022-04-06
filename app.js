@@ -1,5 +1,4 @@
 /*
-// Something for microsoft store:
 var request = require('request');
 
 var url = "https://storeedgefd.dsx.mp.microsoft.com/v8.0/sdk/products?market=PL&locale=pl-PL&deviceFamily=Windows.Desktop";
@@ -19,16 +18,7 @@ request.post(url, data, (error, response, body) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
+/* Table example
 const { table } = require('table');
 
 const data = [
@@ -59,3 +49,23 @@ const config = {
 };
 
 console.log(table(data, config));
+*/
+
+
+
+// Imports:
+const gog = require('./store_modules/gog.js');
+const epic = require('./store_modules/epic.js');
+const steam = require('./store_modules/steam.js');
+const microsoft = require('./store_modules/microsoft.js');
+
+// Vars:
+var gogUrl = "https://www.gog.com/pl/game/martha_is_dead";
+var epicUrl = "https://store.epicgames.com/pl/p/martha-is-dead";
+let steamUrl = "https://store.steampowered.com/app/515960/Martha_Is_Dead/";
+var microsoftUrl = "https://www.xbox.com/pl-pl/games/store/martha-is-dead/9pm6sjbmvqzl";
+
+gog.getPriceData(gogUrl)
+epic.getPriceData(epicUrl);
+steam.getPriceData(steamUrl);
+microsoft.getPriceData(microsoftUrl);

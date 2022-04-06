@@ -1,10 +1,7 @@
 // Imports:
 const common = require('../common.js');
 
-// Var:
-var gogUrl = "https://www.gog.com/pl/game/martha_is_dead";
-
-async function scrape(gogUrl) {
+async function getPriceData(gogUrl) {
     const browser = await common.puppeteer.launch({});
     const page = await browser.newPage();
 
@@ -35,4 +32,6 @@ async function scrape(gogUrl) {
     browser.close();
 };
 
-scrape(gogUrl);
+//getPriceData(gogUrl);
+
+exports.getPriceData = getPriceData;

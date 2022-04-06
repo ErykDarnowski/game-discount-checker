@@ -1,10 +1,7 @@
 // Imports:
 const common = require('../common.js')
 
-// Vars:
-var epicUrl = "https://store.epicgames.com/pl/p/martha-is-dead";
-
-async function scrape(epicUrl) {
+async function getPriceData(epicUrl) {
     const browser = await common.puppeteer.launch({});
     const page = await browser.newPage();
 
@@ -29,4 +26,6 @@ async function scrape(epicUrl) {
     browser.close();
 };
 
-scrape(epicUrl);
+// getPriceData(epicUrl);
+
+exports.getPriceData = getPriceData;
