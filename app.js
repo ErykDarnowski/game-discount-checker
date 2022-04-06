@@ -54,16 +54,29 @@ console.log(table(data, config));
 
 
 // Imports:
+const fs = require('fs');
 const gog = require('./store_modules/gog.js');
 const epic = require('./store_modules/epic.js');
 const steam = require('./store_modules/steam.js');
 const microsoft = require('./store_modules/microsoft.js');
 
+
+
+
+// Getting data from config.json:
+let rawData = fs.readFileSync('config.json');
+let parsedData = JSON.parse(rawData);
+
 // Vars:
-var gogUrl = "https://www.gog.com/pl/game/martha_is_dead";
-var epicUrl = "https://store.epicgames.com/pl/p/martha-is-dead";
-let steamUrl = "https://store.steampowered.com/app/515960/Martha_Is_Dead/";
-var microsoftUrl = "https://www.xbox.com/pl-pl/games/store/martha-is-dead/9pm6sjbmvqzl";
+var config = parsedData["config"];
+
+var gameTitle = parsedData["game_info"]["title"];
+
+var gogUrl = parsedData["game_info"]["gog_URL"];
+var epicUrl = parsedData["game_info"]["epic_URL"];
+var steamUrl = parsedData["game_info"]["steam_URL"];
+var microsoftUrl = parsedData["game_info"]["microsoft_URL"];
+
 
 gog.getPriceData(gogUrl)
 epic.getPriceData(epicUrl);

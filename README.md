@@ -29,7 +29,6 @@ npm install
 - [ ] add support for keeping track of multiple games
 - [ ] test on slower networks? (possible timeout errors?)
 - [ ] higlight lower prices / discounts in console (coloring)
-- [ ] json config file (for game and script settings [sorting mode, table look and others])
 - [ ] at end of table say how much you save by comparing lowest discounted price to highest discounted and/or base price
 - [X] print table in console [easy-table](https://www.npmjs.com/package/easy-table) ; [cli-table](https://github.com/Automattic/cli-table) ; [console-table](https://github.com/LvChengbin/console-table)
 
