@@ -17,22 +17,24 @@ npm install
 
 ### TOOD
 
-- [ ] store icons
-- [ ] add jest tests?
+- [ ] add Jest tests?
 - [ ] diff region support
+- [ ] finish up README.md
+- [ ] make loading prices faster
 - [ ] sort tables based on discounted prices
 - [ ] name change (discounter / discountfetch)
-- [ ] choose between request / node-fetch package
 - [ ] decide on license and change in package.json
+- [ ] choose between (request / node-fetch) package
 - [ ] use <https://github.com/LvChengbin/cli-style>?
 - [ ] add support for keeping track of multiple games
 - [ ] test on slower networks? (possible timeout errors?)
 - [ ] higlight lower prices / discounts in console (coloring)
-- [ ] at end of table say how much you save by comparing lowest discounted price to highest discounted and/or base price
+- [ ] display store icons in terminal (check if this is even possible)?
+- [ ] at end of table print how much you can save by comparing lowest discounted price to highest discounted and/or base price
 - [X] print table in console [easy-table](https://www.npmjs.com/package/easy-table) ; [cli-table](https://github.com/Automattic/cli-table) ; [console-table](https://github.com/LvChengbin/console-table)
 
 ---
 
 - [ ] refractor
 - [ ] test on Win, Mac and Linux
-- [ ] packages / install options on ^ OSs
+- [ ] packages / install options on ^ OSs?
