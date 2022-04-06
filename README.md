@@ -21,6 +21,8 @@ npm install
 - [ ] diff region support
 - [ ] finish up README.md
 - [ ] make loading prices faster
+- [ ] asynchronous price loading?
+- [ ] add open store page (URL) feature
 - [ ] sort tables based on discounted prices
 - [ ] name change (discounter / discountfetch)
 - [ ] decide on license and change in package.json
