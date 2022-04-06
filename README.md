@@ -21,7 +21,6 @@ npm install
 - [ ] add jest tests?
 - [ ] diff region support
 - [ ] sort tables based on discounted prices
-- [ ] change "Url" to "URL" in link var names?
 - [ ] name change (discounter / discountfetch)
 - [ ] choose between request / node-fetch package
 - [ ] decide on license and change in package.json

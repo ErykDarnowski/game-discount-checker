@@ -72,13 +72,13 @@ var config = parsedData["config"];
 
 var gameTitle = parsedData["game_info"]["title"];
 
-var gogUrl = parsedData["game_info"]["gog_URL"];
-var epicUrl = parsedData["game_info"]["epic_URL"];
-var steamUrl = parsedData["game_info"]["steam_URL"];
-var microsoftUrl = parsedData["game_info"]["microsoft_URL"];
+var gogURL = parsedData["game_info"]["gog_URL"];
+var epicURL = parsedData["game_info"]["epic_URL"];
+var steamURL = parsedData["game_info"]["steam_URL"];
+var microsoftURL = parsedData["game_info"]["microsoft_URL"];
 
 
-gog.getPriceData(gogUrl)
-epic.getPriceData(epicUrl);
-steam.getPriceData(steamUrl);
-microsoft.getPriceData(microsoftUrl);
+gog.getPriceData(gogURL)
+epic.getPriceData(epicURL);
+steam.getPriceData(steamURL);
+microsoft.getPriceData(microsoftURL);

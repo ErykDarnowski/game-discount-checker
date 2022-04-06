@@ -1,11 +1,11 @@
 // Imports:
 const common = require('../common.js')
 
-async function getPriceData(epicUrl) {
+async function getPriceData(epicURL) {
     const browser = await common.puppeteer.launch({});
     const page = await browser.newPage();
 
-    await page.goto(epicUrl);
+    await page.goto(epicURL);
     
     var element = await page.waitForSelector('[data-component="PriceLayout"]');
     var priceLayout = await page.evaluate(element => element.innerText, element);
@@ -26,6 +26,6 @@ async function getPriceData(epicUrl) {
     browser.close();
 };
 
-// getPriceData(epicUrl);
+// getPriceData(epicURL);
 
 exports.getPriceData = getPriceData;

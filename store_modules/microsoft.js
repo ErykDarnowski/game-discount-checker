@@ -1,12 +1,12 @@
 // Imports:
 const common = require('../common.js');
 
-async function getPriceData(microsoftUrl) {
+async function getPriceData(microsoftURL) {
     const browser = await common.puppeteer.launch({});
     const page = await browser.newPage();
     
     await page.setDefaultNavigationTimeout(0);
-    await page.goto(microsoftUrl); // , {waitUntil: 'networkidle0'}
+    await page.goto(microsoftURL); // , {waitUntil: 'networkidle0'}
     
     var element = await page.waitForSelector('.Price-module__srOnly___2mBg_');
     var priceEl = await page.evaluate(element => element.innerText.replace("Oryginalna cena: ", "").replace("; cena na wyprzedaży ", ""), element);    
@@ -28,6 +28,6 @@ async function getPriceData(microsoftUrl) {
     browser.close();
 };
 
-//getPriceData(microsoftUrl);
+//getPriceData(microsoftURL);
 
 exports.getPriceData = getPriceData;

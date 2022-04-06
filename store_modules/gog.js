@@ -1,11 +1,11 @@
 // Imports:
 const common = require('../common.js');
 
-async function getPriceData(gogUrl) {
+async function getPriceData(gogURL) {
     const browser = await common.puppeteer.launch({});
     const page = await browser.newPage();
 
-    await page.goto(gogUrl);
+    await page.goto(gogURL);
     
     var apiId = await page.evaluate(
         () => document.querySelector(".layout.ng-scope").attributes["card-product"].textContent
@@ -32,6 +32,6 @@ async function getPriceData(gogUrl) {
     browser.close();
 };
 
-//getPriceData(gogUrl);
+//getPriceData(gogURL);
 
 exports.getPriceData = getPriceData;
