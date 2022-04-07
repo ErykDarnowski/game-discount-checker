@@ -43,10 +43,24 @@ var steamURL = parsedData["game_info"]["steam_URL"];
 var microsoftURL = parsedData["game_info"]["microsoft_URL"];
 
 
-gog.getPriceData(gogURL)
-epic.getPriceData(epicURL);
-steam.getPriceData(steamURL);
-microsoft.getPriceData(microsoftURL);
+
+gog.getPriceData(gogURL).then((gogPriceArr) => {
+    epic.getPriceData(epicURL).then((epicPriceArr) => {
+        steam.getPriceData(steamURL).then((steamPriceArr) => {
+            microsoft.getPriceData(microsoftURL).then((microsoftPriceArr) => {
+                var prices = {
+                    "Steam": steamPriceArr,
+                    "Epic": epicPriceArr,
+                    "GOG": gogPriceArr,
+                    "Microsoft": microsoftPriceArr
+                };
+
+                console.log(prices);
+            });
+        });
+    });
+});
+
 
 
 

@@ -9,10 +9,10 @@ async function getPriceData(gogURL) {
     
     var apiId = await page.evaluate(
         () => document.querySelector(".layout.ng-scope").attributes["card-product"].textContent
-    );
+    );    
 
     // Fetching data from API:
-    common.fetch("https://api.gog.com/products/" + apiId + "/prices?countryCode=pl", { method: "GET" }).then(res => res.json()).then((json) => {
+    return common.fetch("https://api.gog.com/products/" + apiId + "/prices?countryCode=pl", { method: "GET" }).then(res => res.json()).then((json) => {
         // Getting general data:
         var priceOverwiew = json["_embedded"]["prices"][0];
 
@@ -21,17 +21,10 @@ async function getPriceData(gogURL) {
         var discountPrice = common.formatPrice(priceOverwiew['finalPrice'].replace(" PLN", ""));
         var discountPercent = common.calculateDiscountPercent(basePrice, discountPrice);
 
-        // Checking if discount:
-        if (discountPercent == 0) {
-            console.log(basePrice + "zł");
-        } else {
-            console.log(basePrice + "zł -> " + discountPrice + "zł = -" + discountPercent + "%");
-        };
+        browser.close();
+
+        return [basePrice, discountPrice, discountPercent];
     });
-
-    browser.close();
 };
-
-//getPriceData(gogURL);
 
 exports.getPriceData = getPriceData;
