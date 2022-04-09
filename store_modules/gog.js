@@ -1,8 +1,8 @@
 // Imports:
-const common = require('../common.js');
+const { puppeteer, fetch, formatPrice, calculateDiscountPercent } = require('../common.js');
 
 async function getPriceData(gogURL) {
-    const browser = await common.puppeteer.launch({});
+    const browser = await puppeteer.launch({});
     const page = await browser.newPage();
 
     await page.setRequestInterception(true);
@@ -46,14 +46,14 @@ async function getPriceData(gogURL) {
     );    
 
     // Fetching data from API:
-    return common.fetch("https://api.gog.com/products/" + apiId + "/prices?countryCode=pl", { method: "GET" }).then(res => res.json()).then((json) => {
+    return fetch("https://api.gog.com/products/" + apiId + "/prices?countryCode=pl", { method: "GET" }).then(res => res.json()).then((json) => {
         // Getting general data:
         var priceOverwiew = json["_embedded"]["prices"][0];
 
         // Getting specified data:
-        var basePrice = common.formatPrice(priceOverwiew['basePrice'].replace(" PLN", ""));
-        var discountPrice = common.formatPrice(priceOverwiew['finalPrice'].replace(" PLN", ""));
-        var discountPercent = common.calculateDiscountPercent(basePrice, discountPrice);
+        var basePrice = formatPrice(priceOverwiew['basePrice'].replace(" PLN", ""));
+        var discountPrice = formatPrice(priceOverwiew['finalPrice'].replace(" PLN", ""));
+        var discountPercent = calculateDiscountPercent(basePrice, discountPrice);
 
         browser.close();
 
