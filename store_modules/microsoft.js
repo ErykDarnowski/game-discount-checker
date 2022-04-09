@@ -5,7 +5,7 @@ async function getPriceData(microsoftURL) {
     const browser = await puppeteer.launch({});
     const page = await browser.newPage();
     
-    await page.setDefaultNavigationTimeout(0);
+    await page.setCacheEnabled(false);
     await page.setRequestInterception(true);
     
     const blockedTypes = [

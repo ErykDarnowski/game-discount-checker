@@ -5,6 +5,7 @@ async function getPriceData(epicURL) {
     const browser = await puppeteer.launch({});
     const page = await browser.newPage();
 
+    await page.setCacheEnabled(false);
     await page.setRequestInterception(true);
     
     const blockedTypes = [
