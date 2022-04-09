@@ -5,8 +5,33 @@ async function getPriceData(epicURL) {
     const browser = await common.puppeteer.launch({});
     const page = await browser.newPage();
 
-    await page.goto(epicURL);
+    await page.setRequestInterception(true);
     
+    const blockedTypes = [
+        'image',
+        'font',
+        'xhr',
+        'fetch',
+    ];
+    const blockedDomains = [
+        'https://cdn.cookielaw.org',
+        'https://tracking.epicgames.com/',
+        'https://epic-social-social-modules-prod.ol.epicgames.com/'
+    ];
+
+    page.on('request', (req) => {
+        const url = req.url();
+
+        // Blocking types of unneeded requests and some URLSs:
+        if (blockedDomains.some((d) => url.startsWith(d)) || blockedTypes.includes(req.resourceType())) {
+            req.abort();
+        } else {            
+            req.continue();
+        };
+    });
+
+    await page.goto(epicURL);
+
     var element = await page.waitForSelector('[data-component="PriceLayout"]');
     var priceLayout = await page.evaluate(element => element.innerText, element);
 
