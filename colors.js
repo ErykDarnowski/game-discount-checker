@@ -1,3 +1,5 @@
+// More colors: https://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-debug-ansi.html
+
 var start = "\x1b[";
 var end = start + "0m";
 var colors = {

@@ -3,7 +3,7 @@ const { puppeteer, formatPriceToFloat } = require('../common.js')
 
 async function getPriceData(epicURL) {
     const browser = await puppeteer.launch({});
-    const page = await browser.newPage();
+    const page = await browser.newPage();    
 
     await page.setCacheEnabled(false);
     await page.setRequestInterception(true);
@@ -12,12 +12,12 @@ async function getPriceData(epicURL) {
         'image',
         'font',
         'xhr',
-        'fetch',
+        'fetch'
     ];
     const blockedDomains = [
         'https://cdn.cookielaw.org',
         'https://tracking.epicgames.com/',
-        'https://epic-social-social-modules-prod.ol.epicgames.com/',
+        'https://epic-social-social-modules-prod.ol.epicgames.com/'
     ];
 
     page.on('request', (req) => {

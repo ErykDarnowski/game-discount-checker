@@ -45,10 +45,10 @@ var microsoftURL = parsedData["game_info"]["microsoft_URL"];
 
 
 
-gog.getPriceData(gogURL).then((gogPriceArr) => {
-    epic.getPriceData(epicURL).then((epicPriceArr) => {
-        steam.getPriceData(steamURL).then((steamPriceArr) => {
-            microsoft.getPriceData(microsoftURL).then((microsoftPriceArr) => {                
+steam.getPriceData(steamURL).then((steamPriceArr) => {
+    microsoft.getPriceData(microsoftURL).then((microsoftPriceArr) => {
+        gog.getPriceData(gogURL).then((gogPriceArr) => {
+            epic.getPriceData(epicURL).then((epicPriceArr) => {                
                 var prices = [
                     ["Steam"].concat(steamPriceArr),
                     ["Epic"].concat(epicPriceArr),
@@ -104,10 +104,8 @@ gog.getPriceData(gogURL).then((gogPriceArr) => {
                 // How much you can save msg:
                 console.log("@ You can save: " + setColor(moneySaved + "zł (" + Math.round((moneySaved * 100) / highestPrice) + "%) ", colors["highlightColor"]) + "by buying the game on: " + setColor("{" + sortedPrices[sortedPrices.length - 1][0].toUpperCase() + "}", colors["store"]));
 
-                console.log("");
-
                 var endTime = performance.now()
-                console.log((endTime - startTime).toFixed(2))
+                console.log("\n" + (endTime - startTime).toFixed(2))
             });
         });
     });
