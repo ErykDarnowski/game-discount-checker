@@ -5,8 +5,42 @@ async function getPriceData(gogURL) {
     const browser = await common.puppeteer.launch({});
     const page = await browser.newPage();
 
+    await page.setRequestInterception(true);
+
+    const blockedTypes = [
+        'image',
+        'font',
+        'xhr',
+        'fetch',
+        'stylesheet',
+        'other',
+        'ping'
+    ];
+    const blockedDomains = [
+        'https://www.youtube.com/',
+        'https://connect.facebook.net/',
+        'https://consent.cookiebot.com/',
+        'https://www.google-analytics.com/',
+        'https://consentcdn.cookiebot.com/',
+        'https://www.googletagmanager.com/',
+        'https://www.googleadservices.com/',
+        'https://www.gog.com/gogAccessToken.js',
+        'https://www.gog.com/accessTokenClient.js'
+    ];
+
+    page.on('request', (req) => {
+        const url = req.url();
+
+        // Blocking types of unneeded requests and some URLSs:
+        if (blockedDomains.some((d) => url.startsWith(d)) || blockedTypes.includes(req.resourceType())) {
+            req.abort();
+        } else {
+            req.continue();
+        };
+    });
+
     await page.goto(gogURL);
-    
+
     var apiId = await page.evaluate(
         () => document.querySelector(".layout.ng-scope").attributes["card-product"].textContent
     );    
