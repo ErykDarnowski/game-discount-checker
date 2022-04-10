@@ -2,12 +2,6 @@
 const { puppeteer, fetch, formatPrice, calculateDiscountPercent } = require('../common.js');
 
 async function getPriceData(gogURL) {
-    const browser = await puppeteer.launch({});
-    const page = await browser.newPage();
-
-    await page.setCacheEnabled(false);
-    await page.setRequestInterception(true);
-
     const blockedTypes = [
         'image',
         'font',
@@ -36,6 +30,12 @@ async function getPriceData(gogURL) {
         'https://productcard.gog-statics.com/assets/bundle_min.js',
         'https://menu-static.gog-statics.com/assets/js/v2/gog-module'
     ];
+    const browser = await puppeteer.launch({});
+    const page = await browser.newPage();
+
+    await page.setCacheEnabled(false);
+    await page.setRequestInterception(true);
+    
 
     page.on('request', (req) => {
         const url = req.url();
@@ -50,14 +50,14 @@ async function getPriceData(gogURL) {
 
     await page.goto(gogURL);
 
-    var apiId = await page.evaluate(
+    var appId = await page.evaluate(
         () => window.productcardData["cardProduct"]["id"]
     );
 
     browser.close();
-
+    
     // Fetching data from API:
-    return fetch("https://api.gog.com/products/" + apiId + "/prices?countryCode=pl", { method: "GET" }).then(res => res.json()).then((json) => {
+    return fetch("https://api.gog.com/products/" + appId + "/prices?countryCode=pl", { method: "GET" }).then(res => res.json()).then((json) => {
         // Getting general data:
         var priceOverwiew = json["_embedded"]["prices"][0];
 
