@@ -15,18 +15,26 @@ async function getPriceData(gogURL) {
         'fetch',
         'stylesheet',
         'other',
-        'ping'
+        'ping',
+        'media'
     ];
     const blockedDomains = [
         'https://www.youtube.com/',
         'https://connect.facebook.net/',
+        'https://www.gog.com/08evIO9gl',
         'https://consent.cookiebot.com/',
         'https://www.google-analytics.com/',
         'https://consentcdn.cookiebot.com/',
         'https://www.googletagmanager.com/',
         'https://www.googleadservices.com/',
+        'https://menu-static.gog-statics.com/',
         'https://www.gog.com/gogAccessToken.js',
-        'https://www.gog.com/accessTokenClient.js'
+        'https://www.gog.com/accessTokenClient.js',
+        'https://productcard.gog-statics.com/assets/vendor/',
+        'https://productcard.gog-statics.com/assets/locales/',
+        'https://menu-static.gog-statics.com/assets/js/footer/',
+        'https://productcard.gog-statics.com/assets/bundle_min.js',
+        'https://menu-static.gog-statics.com/assets/js/v2/gog-module'
     ];
 
     page.on('request', (req) => {
@@ -43,8 +51,8 @@ async function getPriceData(gogURL) {
     await page.goto(gogURL);
 
     var apiId = await page.evaluate(
-        () => document.querySelector(".layout.ng-scope").attributes["card-product"].textContent
-    );    
+        () => window.productcardData["cardProduct"]["id"]
+    );
 
     // Fetching data from API:
     return fetch("https://api.gog.com/products/" + apiId + "/prices?countryCode=pl", { method: "GET" }).then(res => res.json()).then((json) => {
