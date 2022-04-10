@@ -2,9 +2,9 @@
 const { fetch, formatPrice } = require('../common.js');
 
 async function getPriceData(steamURL) {
-    let splitURL = steamURL.split("/");
-    let gameId = splitURL.slice(4, 5)[0];
-    let apiURL = splitURL.slice(0, 3).join("/") + "/api/appdetails?appids=" + gameId;
+    let splitURL = steamURL.split("app")
+    let gameId = splitURL[1].split("/")[1];
+    let apiURL = splitURL[0] + "api/appdetails?appids=" + gameId;
 
     // Fetching data from API:
     return fetch(apiURL, { method: "GET" }).then(res => res.json()).then((json) => {
