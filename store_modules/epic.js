@@ -2,23 +2,28 @@
 const { puppeteer, formatPriceToFloat } = require('../common.js')
 
 async function getPriceData(epicURL) {
+    const blockedTypes = [
+        'image',
+        'font',
+        'xhr',
+        'fetch',
+        'other',
+        'ping',
+        'media'
+    ];
+    const blockedDomains = [
+        'https://cdn.cookielaw.org',
+        'https://tracking.epicgames.com/',
+        'https://epic-social-social-modules-prod.ol.epicgames.com/',
+        'https://static-assets-prod.epicgames.com/epic-store/static/webpack/fonts',
+        'https://static-assets-prod.epicgames.com/epic-store/static/webpack/webAppStyles'
+    ];
     const browser = await puppeteer.launch({});
     const page = await browser.newPage();    
 
     await page.setCacheEnabled(false);
     await page.setRequestInterception(true);
-    
-    const blockedTypes = [
-        'image',
-        'font',
-        'xhr',
-        'fetch'
-    ];
-    const blockedDomains = [
-        'https://cdn.cookielaw.org',
-        'https://tracking.epicgames.com/',
-        'https://epic-social-social-modules-prod.ol.epicgames.com/'
-    ];
+
 
     page.on('request', (req) => {
         const url = req.url();
@@ -46,10 +51,14 @@ async function getPriceData(epicURL) {
         //console.log(basePrice + "zł");
         priceDataArr = [basePrice, basePrice, 0];
     } else {
-        var basePrice = formatPriceToFloat(priceLayout.split("\n")[1].replace(" zł", ""));
-        var discountPrice = formatPriceToFloat(priceLayout.split("\n")[2].replace(" zł", ""));
-        var discountPercent = formatPriceToFloat(priceLayout.split("\n")[0]);
+        var priceLayoutSplit = priceLayout.split("\n");
+
+        var basePrice = formatPriceToFloat(priceLayoutSplit[1].replace(" zł", ""));
+        var discountPrice = formatPriceToFloat(priceLayoutSplit[2].replace(" zł", ""));
+        var discountPercent = Math.round(parseFloat(priceLayoutSplit[0].replace("-", "").replace("%", "")));
         
+        console.log(priceLayoutSplit[2].replace(" zł", ""));
+
         //console.log(basePrice + "zł -> " + discountPrice + "zł = -" + discountPercent + "%");
         priceDataArr = [basePrice, discountPrice, discountPercent];
     };
