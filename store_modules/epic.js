@@ -36,6 +36,8 @@ async function getPriceData(epicURL) {
     var element = await page.waitForSelector('[data-component="PriceLayout"]');
     var priceLayout = await page.evaluate(element => element.innerText, element);
 
+    browser.close();
+
     // Check if discount:
     var priceDataArr = [];
     if (priceLayout.split("\n").length == 1) {
@@ -51,8 +53,6 @@ async function getPriceData(epicURL) {
         //console.log(basePrice + "zł -> " + discountPrice + "zł = -" + discountPercent + "%");
         priceDataArr = [basePrice, discountPrice, discountPercent];
     };
-
-    browser.close();
     
     return priceDataArr;
 };

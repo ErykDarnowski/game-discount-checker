@@ -54,6 +54,8 @@ async function getPriceData(gogURL) {
         () => window.productcardData["cardProduct"]["id"]
     );
 
+    browser.close();
+
     // Fetching data from API:
     return fetch("https://api.gog.com/products/" + apiId + "/prices?countryCode=pl", { method: "GET" }).then(res => res.json()).then((json) => {
         // Getting general data:
@@ -63,8 +65,6 @@ async function getPriceData(gogURL) {
         var basePrice = formatPrice(priceOverwiew['basePrice'].replace(" PLN", ""));
         var discountPrice = formatPrice(priceOverwiew['finalPrice'].replace(" PLN", ""));
         var discountPercent = calculateDiscountPercent(basePrice, discountPrice);
-
-        browser.close();
 
         return [basePrice, discountPrice, discountPercent];
     });

@@ -34,7 +34,7 @@ async function getPriceData(microsoftURL) {
         // Blocking types of unneeded requests and some URLSs:
         if (blockedDomains.some((d) => url.startsWith(d)) || blockedTypes.includes(req.resourceType())) {
             req.abort();
-        } else {            
+        } else {
             req.continue();
         };
     });
@@ -44,6 +44,7 @@ async function getPriceData(microsoftURL) {
     var element = await page.waitForSelector('.Price-module__srOnly___2mBg_');
     var priceEl = await page.evaluate(element => element.innerText.replace("Oryginalna cena: ", "").replace("; cena na wyprzedaży ", ""), element);    
 
+    browser.close();
 
     // Check if discount:
     if (priceEl.split(" zł").length == 2) {
@@ -58,9 +59,7 @@ async function getPriceData(microsoftURL) {
 
         //console.log(basePrice + "zł -> " + discountPrice + "zł = -" + discountPercent + "%");
         priceDataArr = [basePrice, discountPrice, discountPercent];
-    };
-    
-    browser.close();
+    };    
 
     return priceDataArr;
 };
