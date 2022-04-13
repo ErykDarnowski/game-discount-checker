@@ -23,6 +23,7 @@ var startTime = performance.now()
 // Imports:
 const fs = require('fs');
 const { table } = require('table');
+const { Spinner } = require('./spinner.js');
 const { setColor, colors } = require('./colors.js');
 const gog = require('./store_modules/gog.js');
 const epic = require('./store_modules/epic.js');
@@ -43,12 +44,25 @@ var epicURL = parsedData["game_info"]["epic_URL"];
 var steamURL = parsedData["game_info"]["steam_URL"];
 var microsoftURL = parsedData["game_info"]["microsoft_URL"];
 
+var commonSpinnerMsg = "@ Fetching price from ";
+var gogSpinner = new Spinner(commonSpinnerMsg + setColor("{GOG}", colors["store"]));
+var epicSpinner = new Spinner(commonSpinnerMsg + setColor("{EPIC}", colors["store"]));
+var steamSpinner = new Spinner(commonSpinnerMsg + setColor("{STEAM}", colors["store"]));
+var microsoftSpinner = new Spinner(commonSpinnerMsg + setColor("{MICROSOFT}", colors["store"]));
 
 
-steam.getPriceData(steamURL).then((steamPriceArr) => {
-    microsoft.getPriceData(microsoftURL).then((microsoftPriceArr) => {
-        gog.getPriceData(gogURL).then((gogPriceArr) => {
-            epic.getPriceData(epicURL).then((epicPriceArr) => {                
+gogSpinner.start();
+gog.getPriceData(gogURL).then((gogPriceArr) => {
+    gogSpinner.stop();
+    epicSpinner.start();
+    epic.getPriceData(epicURL).then((epicPriceArr) => {
+        epicSpinner.stop();
+        steamSpinner.start();
+        steam.getPriceData(steamURL).then((steamPriceArr) => {
+            steamSpinner.stop();
+            microsoftSpinner.start();
+            microsoft.getPriceData(microsoftURL).then((microsoftPriceArr) => {
+                microsoftSpinner.stop();
                 var prices = [
                     ["Steam"].concat(steamPriceArr),
                     ["Epic"].concat(epicPriceArr),
