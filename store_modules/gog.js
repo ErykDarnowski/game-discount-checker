@@ -1,3 +1,5 @@
+// gog api: https://gogapidocs.readthedocs.io/en/latest/
+
 // Imports:
 const { puppeteer, fetch, formatPrice, calculateDiscountPercent } = require('../common.js');
 
