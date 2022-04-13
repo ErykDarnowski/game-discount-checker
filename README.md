@@ -1,17 +1,28 @@
 # game-discount-checker
 
-## Description
+## Description:
 
-A simple cli tool that scrapes game store websites to check if a game's prices got lowered.
+A simple CLI tool that scrapes game store websites to check if a game's price got discounted.
 
 ---
 
-### Instructions
+### Instructions:
 
 ```bash
 # 1. Install all packages:
 npm install
 ```
+
+---
+
+### Couldn't have done it without these 😙
+
+- [MS-Store-API](https://github.com/ThomasPe/MS-Store-API) - API used in microsoft.js
+- [gogapidocs](https://github.com/Yepoleb/gogapidocs) - API used in gog.js
+- [cli-spinner](https://github.com/sindresorhus/cli-spinners) - Animations used in spinner.js
+- [node-fetch](https://github.com/node-fetch/node-fetch) - Handles requests to all APIs
+- [puppeteer](https://github.com/puppeteer/puppeteer) - Helps in getting a game's ID in gog.js
+- [table](https://github.com/gajus/table) - Prints table in app.js
 
 ---
 
