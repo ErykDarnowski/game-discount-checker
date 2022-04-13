@@ -46,6 +46,7 @@ async function getPriceData(gogURL) {
         if (blockedDomains.some((d) => url.startsWith(d)) || blockedTypes.includes(req.resourceType())) {
             req.abort();
         } else {
+            //console.log(req.resourceType() + " = " + url);
             req.continue();
         };
     });

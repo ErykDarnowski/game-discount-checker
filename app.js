@@ -36,13 +36,14 @@ let parsedData = JSON.parse(rawData);
 
 // Vars:
 var config = parsedData["config"];
+var gameInfo = parsedData["game_info"];
 
-var gameTitle = parsedData["game_info"]["title"];
+var gameTitle = gameInfo["title"];
 
-var gogURL = parsedData["game_info"]["gog_URL"];
-var epicURL = parsedData["game_info"]["epic_URL"];
-var steamURL = parsedData["game_info"]["steam_URL"];
-var microsoftURL = parsedData["game_info"]["microsoft_URL"];
+var gogURL = gameInfo["gog_URL"];
+var epicURL = gameInfo["epic_URL"];
+var steamURL = gameInfo["steam_URL"];
+var microsoftURL = gameInfo["microsoft_URL"];
 
 var commonSpinnerMsg = "@ Fetching price from ";
 var gogSpinner = new Spinner(commonSpinnerMsg + setColor("{GOG}", colors["store"]));
@@ -51,6 +52,7 @@ var steamSpinner = new Spinner(commonSpinnerMsg + setColor("{STEAM}", colors["st
 var microsoftSpinner = new Spinner(commonSpinnerMsg + setColor("{MICROSOFT}", colors["store"]));
 
 
+// Showing spinners and loading data from each store_modules file:
 gogSpinner.start();
 gog.getPriceData(gogURL).then((gogPriceArr) => {
     gogSpinner.stop();
@@ -63,6 +65,7 @@ gog.getPriceData(gogURL).then((gogPriceArr) => {
             microsoftSpinner.start();
             microsoft.getPriceData(microsoftURL).then((microsoftPriceArr) => {
                 microsoftSpinner.stop();
+
                 var prices = [
                     ["Steam"].concat(steamPriceArr),
                     ["Epic"].concat(epicPriceArr),
@@ -84,15 +87,15 @@ gog.getPriceData(gogURL).then((gogPriceArr) => {
                     el[3] = `-${el[3]}%`;
                 });
 
-                // Setting up table:
+                // Populating table data with sorted prices:
                 const data = [
                     ['STORE', 'BASE', 'CURRENT', 'DISCOUNT']                    
                 ];
-                
                 sortedPrices.map((el) => {
                     data.push(el);
                 });
 
+                // Setting up table:
                 const tableConfig = {
                     header: {
                         content: gameTitle + '\n[Price Comparison]',
