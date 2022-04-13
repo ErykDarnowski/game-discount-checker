@@ -9,10 +9,16 @@
     },
 
     "config": {
-        "table_sorting_mode": "h",
-        "table_style": "default",
-
         "currency": "PLN",
-        "region": "PL"
+        "region": "PL",
+
+
+        "clear_console_before_script": true,
+
+        "table_sorting_mode": "descending",
+        "table_style": "default",
+        
+        "show_spinners": false,
+        "spinner_style": "default"
     }
 }
