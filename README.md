@@ -38,7 +38,6 @@ npm install
 - [ ] for epic.js get data from some JSON el that is loaded before Price el in HTML or find unofficial api?
 - [ ] make table work with only basic ASCII / add option to switch mode in config.json / and or auto detect?
 - [ ] check store_modules with multiple games to check out filters and price and return discount values correctly
-- [ ] fix formatPriceToFloat so it can also take string args + remove string parses when using this func in store_modules
 - [X] at end of table print how much you can save by comparing lowest discounted price to highest discounted and/or base price
 - [ ] investigate discounts countdowns? (some APIs countdown to something - microsoft one) -> { "EndDate": "9998-12-30T00:00:00Z" }
 - [X] print table in console [easy-table](https://www.npmjs.com/package/easy-table) ; [cli-table](https://github.com/Automattic/cli-table) ; [console-table](https://github.com/LvChengbin/console-table)

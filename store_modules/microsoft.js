@@ -16,8 +16,8 @@ async function getPriceData(microsoft_URL) {
         var priceData = json["Products"][0]["DisplaySkuAvailabilities"][0]["Availabilities"][0]["OrderManagementData"]["Price"];
 
         // Getting specific data:
-        var basePrice = formatPriceToFloat(String(priceData["MSRP"]));
-        var discountPrice = formatPriceToFloat(String(priceData["ListPrice"]));
+        var basePrice = formatPriceToFloat(priceData["MSRP"]);
+        var discountPrice = formatPriceToFloat(priceData["ListPrice"]);
         var discountPercent = calculateDiscountPercent(basePrice, discountPrice);
         
         return [basePrice, discountPrice, discountPercent];
