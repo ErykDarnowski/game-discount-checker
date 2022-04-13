@@ -10,8 +10,16 @@
     "type": "git",
     "url": "git+https://github.com/ErykDarnowski/game-discount-checker.git"
   },
+  "keywords": [
+    "cli",
+    "gaming",
+    "discounts",
+    "terminal-based",
+    "game-discount-info",
+    "game-discount-checker"
+  ],
   "author": "Eryk Darnowski",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ErykDarnowski/game-discount-checker/issues"
   },

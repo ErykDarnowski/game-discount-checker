@@ -24,7 +24,6 @@ npm install
 - [ ] asynchronous price loading?
 - [ ] add open store page (URL) feature
 - [ ] name change (discounter / discountfetch)
-- [ ] decide on license and change in package.json
 - [ ] choose between (request / node-fetch) package
 - [ ] use <https://github.com/LvChengbin/cli-style>?
 - [ ] add support for keeping track of multiple games
