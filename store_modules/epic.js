@@ -3,22 +3,12 @@ const { puppeteer, formatPriceToFloat } = require('../common.js')
 
 async function getPriceData(epicURL) {
     const blockedTypes = [
-        'image',
-        'font',
         'xhr',
-        'fetch',
-        'other',
-        'ping',
+        'font',
+        'image',
         'media',
         'script',
         'stylesheet'
-    ];
-    const blockedDomains = [
-        'https://cdn.cookielaw.org',
-        'https://tracking.epicgames.com/',
-        'https://epic-social-social-modules-prod.ol.epicgames.com/',
-        'https://static-assets-prod.epicgames.com/epic-store/static/webpack/fonts',
-        'https://static-assets-prod.epicgames.com/epic-store/static/webpack/webAppStyles'
     ];
     const browser = await puppeteer.launch({});
     const page = await browser.newPage();    
@@ -30,8 +20,8 @@ async function getPriceData(epicURL) {
     page.on('request', (req) => {
         const url = req.url();
         
-        // Blocking types of unneeded requests and some URLSs:
-        if (blockedDomains.some((d) => url.startsWith(d)) || blockedTypes.includes(req.resourceType())) {
+        // Blocking types of unneeded requests:
+        if (blockedTypes.includes(req.resourceType())) {
             req.abort();
         } else {
             //console.log(req.resourceType() + " = " + url);
@@ -41,7 +31,25 @@ async function getPriceData(epicURL) {
 
     await page.goto(epicURL);
 
-    var element = await page.waitForSelector('[data-component="PriceLayout"]');    
+    /*
+    var schemaJSON = await page.evaluate(
+        () => document.querySelector('script[type="application/ld+json"]').innerText
+    );
+
+    var priceLayout = [JSON.parse(schemaJSON)["offers"][0]["priceSpecification"]["price"]];
+
+    @ First run:
+    - Get base price from PriceLayout el
+    - Save in caceh
+
+    @ Next runs:
+    - Get current price from _schemaOrgMarkup-Product JSON el
+    - Compare to cached value and calculate diff
+
+    ^ check speed
+    */
+    
+    var element = await page.waitForSelector('[data-component="PriceLayout"]');
     var priceLayout = await page.evaluate(element => element.innerText, element);
     priceLayout = priceLayout.replaceAll("PLN ", "").split("\n");
 

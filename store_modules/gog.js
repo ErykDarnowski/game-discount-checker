@@ -5,32 +5,15 @@ const { puppeteer, fetch, formatPrice, calculateDiscountPercent } = require('../
 
 async function getPriceData(gogURL) {
     const blockedTypes = [
-        'image',
-        'font',
         'xhr',
-        'fetch',
-        'stylesheet',
-        'other',
+        'font',
         'ping',
-        'media'
-    ];
-    const blockedDomains = [
-        'https://www.youtube.com/',
-        'https://connect.facebook.net/',
-        'https://www.gog.com/08evIO9gl',
-        'https://consent.cookiebot.com/',
-        'https://www.google-analytics.com/',
-        'https://consentcdn.cookiebot.com/',
-        'https://www.googletagmanager.com/',
-        'https://www.googleadservices.com/',
-        'https://menu-static.gog-statics.com/',
-        'https://www.gog.com/gogAccessToken.js',
-        'https://www.gog.com/accessTokenClient.js',
-        'https://productcard.gog-statics.com/assets/vendor/',
-        'https://productcard.gog-statics.com/assets/locales/',
-        'https://menu-static.gog-statics.com/assets/js/footer/',
-        'https://productcard.gog-statics.com/assets/bundle_min.js',
-        'https://menu-static.gog-statics.com/assets/js/v2/gog-module'
+        'image',
+        'fetch',
+        'other',
+        'media',
+        'script',
+        'stylesheet'
     ];
     const browser = await puppeteer.launch({});
     const page = await browser.newPage();
@@ -43,7 +26,7 @@ async function getPriceData(gogURL) {
         const url = req.url();
 
         // Blocking types of unneeded requests and some URLSs:
-        if (blockedDomains.some((d) => url.startsWith(d)) || blockedTypes.includes(req.resourceType())) {
+        if (url.startsWith("https://www.youtube.com/") || blockedTypes.includes(req.resourceType())) {
             req.abort();
         } else {
             //console.log(req.resourceType() + " = " + url);
