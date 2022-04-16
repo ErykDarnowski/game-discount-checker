@@ -1,9 +1,19 @@
-# game-discount-checker
+<p align="center">
+    <a href="http://opensource.org/licenses/MIT">
+        <img alt="license" src="https://img.shields.io/badge/license-MIT-darkergreen.svg?style=flat">
+    </a>
+    <br>
+    <img alt="total lines" src="https://img.shields.io/tokei/lines/github/ErykDarnowski/game-discount-checker?color=red">
+    <img alt="repo size" src="https://img.shields.io/github/repo-size/ErykDarnowski/game-discount-checker?color=red">
+    <br>
+    <img alt="open issues" src="https://img.shields.io/github/issues-raw/ErykDarnowski/game-discount-checker">
+    <img alt="closed issues" src="https://img.shields.io/github/issues-closed-raw/ErykDarnowski/game-discount-checker?color=yellow">    
+    <br>
+    <br>
+    <img alt="1.0 progress" src="https://img.shields.io/github/milestones/progress-percent/ErykDarnowski/game-discount-checker/1">
+</span>
 
-[![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://opensource.org/licenses/MIT)
-<br>
-![total lines](https://img.shields.io/tokei/lines/github/ErykDarnowski/game-discount-checker?color=red)
-![repo size](https://img.shields.io/github/repo-size/ErykDarnowski/game-discount-checker?color=red)
+# game-discount-checker
 
 ## Description:
 
