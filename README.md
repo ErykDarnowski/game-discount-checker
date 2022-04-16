@@ -1,17 +1,23 @@
 <p align="center">
-    <a href="http://opensource.org/licenses/MIT">
-        <img alt="license" src="https://img.shields.io/badge/license-MIT-darkergreen.svg?style=flat">
+    <a alt="license" href="http://opensource.org/licenses/MIT">
+        <img src="https://img.shields.io/badge/license-MIT-darkergreen.svg?style=flat" />
     </a>
     <br>
-    <img alt="total lines" src="https://img.shields.io/tokei/lines/github/ErykDarnowski/game-discount-checker?color=red">
-    <img alt="repo size" src="https://img.shields.io/github/repo-size/ErykDarnowski/game-discount-checker?color=red">
+    <img alt="total lines" src="https://img.shields.io/tokei/lines/github/ErykDarnowski/game-discount-checker?color=red" />
+    <img alt="repo size" src="https://img.shields.io/github/repo-size/ErykDarnowski/game-discount-checker?color=red" />
     <br>
-    <img alt="open issues" src="https://img.shields.io/github/issues-raw/ErykDarnowski/game-discount-checker">
-    <img alt="closed issues" src="https://img.shields.io/github/issues-closed-raw/ErykDarnowski/game-discount-checker?color=yellow">    
+    <a alt="open issues" href="https://github.com/ErykDarnowski/game-discount-checker/issues?q=is%3Aopen+is%3Aissue">
+        <img src="https://img.shields.io/github/issues-raw/ErykDarnowski/game-discount-checker" />
+    </a>
+    <a alt="closed issues" href="https://github.com/ErykDarnowski/game-discount-checker/issues?q=is%3Aissue+is%3Aclosed">
+        <img src="https://img.shields.io/github/issues-closed-raw/ErykDarnowski/game-discount-checker?color=yellow" />
+    </a>
     <br>
     <br>
-    <img alt="1.0 progress" src="https://img.shields.io/github/milestones/progress-percent/ErykDarnowski/game-discount-checker/1">
-</span>
+    <a alt="1.0 milestone" href="https://github.com/ErykDarnowski/game-discount-checker/milestone/1">
+        <img src="https://img.shields.io/github/milestones/progress-percent/ErykDarnowski/game-discount-checker/1?label=1.0%20milestone" />
+    </a>
+</p>
 
 # game-discount-checker
 
