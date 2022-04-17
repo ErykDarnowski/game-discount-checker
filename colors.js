@@ -10,7 +10,7 @@ var colors = {
     "spinnerErr": start + "31m" 
 };
 
-function setColor(str, color) {    
+function setColor(str, color) {
     return color + str + end;
 };
 

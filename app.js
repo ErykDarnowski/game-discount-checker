@@ -35,9 +35,9 @@ var priceSpinner = new Spinner("@ Fetching prices");
     priceSpinner.stop();
 
     var prices = [
-        ["Steam"].concat(steamPriceArr),
-        ["Epic"].concat(epicPriceArr),
         ["GOG"].concat(gogPriceArr),
+        ["Epic"].concat(epicPriceArr),
+        ["Steam"].concat(steamPriceArr),
         ["Microsoft"].concat(microsoftPriceArr)
     ];
 
