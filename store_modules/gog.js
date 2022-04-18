@@ -1,7 +1,7 @@
 // gog api: https://gogapidocs.readthedocs.io/en/latest/
 
 // Imports:
-const { puppeteer, fetch, formatPrice, calculateDiscountPercent } = require('../common.js');
+const { puppeteer, axios, formatPrice, calculateDiscountPercent } = require('../common.js');
 
 async function getPriceData(gogURL) {
     const blockedTypes = [
@@ -43,9 +43,9 @@ async function getPriceData(gogURL) {
     browser.close();
     
     // Fetching data from API:
-    return fetch("https://api.gog.com/products/" + appId + "/prices?countryCode=pl", { method: "GET" }).then(res => res.json()).then((json) => {
+    return axios.get("https://api.gog.com/products/" + appId + "/prices?countryCode=pl").then((responseJSON) => {
         // Getting general data:
-        var priceOverwiew = json["_embedded"]["prices"][0];
+        var priceOverwiew = responseJSON.data._embedded.prices[0];
 
         // Getting specified data:
         var basePrice = formatPrice(priceOverwiew['basePrice'].replace(" PLN", ""));
@@ -53,6 +53,8 @@ async function getPriceData(gogURL) {
         var discountPercent = calculateDiscountPercent(basePrice, discountPrice);
 
         return [basePrice, discountPrice, discountPercent];
+    }).catch((error) => {
+        console.log(error);
     });
 };
 

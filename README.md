@@ -47,8 +47,8 @@ node app.js
 ### Couldn't have done it without these 😙
 
 - [MS-Store-API](https://github.com/ThomasPe/MS-Store-API) - API used in microsoft.js
-- [gogapidocs](https://github.com/Yepoleb/gogapidocs) - API used in gog.js
 - [cli-spinner](https://github.com/sindresorhus/cli-spinners) - Animations used in spinner.js
-- [node-fetch](https://github.com/node-fetch/node-fetch) - Handles requests to all APIs
+- [gogapidocs](https://github.com/Yepoleb/gogapidocs) - API used in gog.js
 - [puppeteer](https://github.com/puppeteer/puppeteer) - Helps in getting a game's ID in gog.js
+- [axios](https://github.com/axios/axios) - Handles requests to all APIs
 - [table](https://github.com/gajus/table) - Prints table in app.js

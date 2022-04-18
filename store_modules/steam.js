@@ -5,7 +5,7 @@
 */
 
 // Imports:
-const { fetch, formatPrice } = require('../common.js');
+const { axios, formatPrice } = require('../common.js');
 
 async function getPriceData(steamURL) {
     let splitURL = steamURL.split("app")
@@ -13,9 +13,9 @@ async function getPriceData(steamURL) {
     let apiURL = splitURL[0] + "api/appdetails?appids=" + gameId + "&cc=PLN";
 
     // Fetching data from API:
-    return fetch(apiURL, { method: "GET" }).then(res => res.json()).then((json) => {
+    return axios.get(apiURL).then((responseJSON) => {
         // Getting general data:
-        var priceOverview = json[gameId]["data"]["price_overview"];
+        var priceOverview = responseJSON.data[gameId].data.price_overview;
         
         // Getting specific data:
         var basePrice = formatPrice(priceOverview['initial']);
@@ -23,6 +23,8 @@ async function getPriceData(steamURL) {
         var discountPercent = priceOverview['discount_percent'];
         
         return [basePrice, discountPrice, discountPercent];
+    }).catch((error) => {
+        console.log(error);
     });
 };
 

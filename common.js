@@ -1,5 +1,5 @@
 // Imports:
-const fetch = require('node-fetch');
+const axios = require('axios');
 const puppeteer = require('puppeteer');
 
 
@@ -22,7 +22,7 @@ function calculateDiscountPercent(basePrice, discountPrice) {
 
 
 module.exports = {
-    fetch: fetch,
+    axios: axios,
     puppeteer: puppeteer,
     formatPrice: formatPrice,
     formatPriceToFloat: formatPriceToFloat,

@@ -1,19 +1,19 @@
 // microsoft api github: https://github.com/ThomasPe/MS-Store-API
 
 // Imports:
-const { fetch, formatPriceToFloat, calculateDiscountPercent} = require('../common.js');
+const { axios, formatPriceToFloat, calculateDiscountPercent } = require('../common.js');
 
 async function getPriceData(microsoft_URL) {
     var productId = microsoft_URL.split("?")[0].split("/").pop();
 
     // Fetching data from API:
-    return fetch('https://storeedgefd.dsx.mp.microsoft.com/v8.0/sdk/products?market=PL&locale=pl-PL&deviceFamily=Windows.Desktop', {
-        method: "POST",
-        body: `{ "productIds": "${productId}" }`,
-        headers: { "Content-Type": "application/json" }
-    }).then(res => res.json()).then(json => {
+    return axios.post('https://storeedgefd.dsx.mp.microsoft.com/v8.0/sdk/products?market=PL&locale=pl-PL&deviceFamily=Windows.Desktop', {
+        productIds: productId
+    }, {
+        "Content-Type": "application/json"
+    }).then((responseJSON) => {
         // Getting general data:
-        var priceData = json["Products"][0]["DisplaySkuAvailabilities"][0]["Availabilities"][0]["OrderManagementData"]["Price"];
+        var priceData = responseJSON.data.Products[0].DisplaySkuAvailabilities[0].Availabilities[0].OrderManagementData.Price;
 
         // Getting specific data:
         var basePrice = formatPriceToFloat(priceData["MSRP"]);
@@ -21,6 +21,8 @@ async function getPriceData(microsoft_URL) {
         var discountPercent = calculateDiscountPercent(basePrice, discountPrice);
         
         return [basePrice, discountPrice, discountPercent];
+    }).catch((error) => {
+        console.log(error);
     });
 };
 
