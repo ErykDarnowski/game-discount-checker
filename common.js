@@ -1,7 +1,7 @@
 // Imports:
+const fs = require('fs')
 const axios = require('axios');
 const puppeteer = require('puppeteer');
-
 
 // Funcs:
 // Adds "." before 2 numbers from end [example: 10799 -> 107.99]:
@@ -22,6 +22,7 @@ function calculateDiscountPercent(basePrice, discountPrice) {
 
 
 module.exports = {
+    fs: fs,
     axios: axios,
     puppeteer: puppeteer,
     formatPrice: formatPrice,
