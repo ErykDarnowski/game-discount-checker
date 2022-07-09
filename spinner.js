@@ -270,57 +270,55 @@
 }
 */
 
-
 /*
 .setSpinnerString('|/-\\'); // <= or num or type from enum
 */
-
 
 // Imports:
 const { setColor, colors } = require('./colors.js');
 
 class Spinner {
-    constructor(msg) {
-        this.msg = msg + " ";
-    };
+	constructor(msg) {
+		this.msg = msg + ' ';
+	}
 
-    start() {
-        var interval = 70;
-        var frameNum = 0;
-        var frames = [
-            "[    ]",
-            "[=   ]",
-            "[==  ]",
-            "[=== ]",
-            "[ ===]",
-            "[  ==]",
-            "[   =]",
-            "[    ]",
-            "[   =]",
-            "[  ==]",
-            "[ ===]",
-            "[====]",
-            "[=== ]",
-            "[==  ]",
-            "[=   ]"
-        ];
-    
-        this.timer = setInterval(() => {
-            process.stdout.write("\r" + this.msg + setColor(frames[frameNum++], colors["spinner"]));
-            frameNum %= frames.length;
-        }, interval);
-    };
+	start() {
+		var interval = 70;
+		var frameNum = 0;
+		var frames = [
+			'[    ]',
+			'[=   ]',
+			'[==  ]',
+			'[=== ]',
+			'[ ===]',
+			'[  ==]',
+			'[   =]',
+			'[    ]',
+			'[   =]',
+			'[  ==]',
+			'[ ===]',
+			'[====]',
+			'[=== ]',
+			'[==  ]',
+			'[=   ]',
+		];
 
-    stop(errState=false) {
-        clearInterval(this.timer);
-        process.stdout.write("\r" + this.msg + (errState ? setColor("[ ERR ]", colors["spinnerErr"]) : setColor("[ OK ]", colors["spinnerOk"])) + "\n");
-    };
-};
+		this.timer = setInterval(() => {
+			process.stdout.write('\r' + this.msg + setColor(frames[frameNum++], colors['spinner']));
+			frameNum %= frames.length;
+		}, interval);
+	}
+
+	stop(errState = false) {
+		clearInterval(this.timer);
+		process.stdout.write('\r' + this.msg + (errState ? setColor('[ ERR ]', colors['spinnerErr']) : setColor('[ OK ]', colors['spinnerOk'])) + '\n');
+	}
+}
 
 /* Test:
 var testSpinner = new Spinner("@ Fetching price from " + setColor("{GOG}", colors["store"]));
 testSpinner.start();
-setTimeout(function() {
+setTimeout(() => {
     testSpinner.stop();
 }, 4000);
 */

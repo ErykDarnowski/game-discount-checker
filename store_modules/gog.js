@@ -3,109 +3,95 @@
 // Imports:
 const { fs, puppeteer, axios, formatPrice, calculateDiscountPercent } = require('../common.js');
 
+const getGOGAppId = async (gogURL) => {
+	const blockedTypes = ['xhr', 'font', 'ping', 'image', 'fetch', 'other', 'media', 'script', 'stylesheet'];
+	const browser = await puppeteer.launch({});
+	const page = await browser.newPage();
+	var appId = '';
 
-async function getGOGAppId(gogURL) {
-    const blockedTypes = [
-        'xhr',
-        'font',
-        'ping',
-        'image',
-        'fetch',
-        'other',
-        'media',
-        'script',
-        'stylesheet'
-    ];
-    const browser = await puppeteer.launch({});
-    const page = await browser.newPage();
-    var appId = "";
+	await page.setCacheEnabled(false);
+	await page.setRequestInterception(true);
 
-    await page.setCacheEnabled(false);
-    await page.setRequestInterception(true);
-    
+	page.on('request', req => {
+		const url = req.url();
 
-    page.on('request', (req) => {
-        const url = req.url();
+		// Blocking types of unneeded requests and some URLSs:
+		if (url.startsWith('https://www.youtube.com/') || blockedTypes.includes(req.resourceType())) {
+			req.abort();
+		} else {
+			//console.log(req.resourceType() + " = " + url);
+			req.continue();
+		}
+	});
 
-        // Blocking types of unneeded requests and some URLSs:
-        if (url.startsWith("https://www.youtube.com/") || blockedTypes.includes(req.resourceType())) {
-            req.abort();
-        } else {
-            //console.log(req.resourceType() + " = " + url);
-            req.continue();
-        };
-    });
+	await page.goto(gogURL);
 
-    await page.goto(gogURL);
+	appId = await page.evaluate(() => window.productcardData['cardProduct']['id']);
 
-    appId = await page.evaluate(
-        () => window.productcardData["cardProduct"]["id"]
-    );
+	browser.close();
 
-    browser.close();
+	return appId;
+}
 
+const getPriceData = async (gogURL) => {
+	const cachePath = './cache.json';
+	var appId = '';
 
-    return appId;
-};
+	// Checking if cache file exists:
+	try {
+		if (fs.existsSync(cachePath)) {
+			var cacheJSON = JSON.parse(fs.readFileSync('cache.json'));
 
+			// check if URL value changed:
+			if (gogURL != cacheJSON[0].url) {
+				appId = await getGOGAppId(gogURL);
 
-async function getPriceData(gogURL) {
-    const cachePath = './cache.json';
-    var appId = "";
+				var output = `[
+					{
+						"store_name": "GOG",
+						"url": "${gogURL}",
+						"data": "${appId}"
+					}
+				]`;
 
-    // Checking if cache file exists:
-    try {
-        if (fs.existsSync(cachePath)) {
-            var cacheJSON = JSON.parse(fs.readFileSync('cache.json'));
+				fs.writeFileSync('cache.json', JSON.stringify(JSON.parse(output)));
+			} else {
+				appId = cacheJSON[0].data;
+			}
+		} else {
+			appId = await getGOGAppId(gogURL);
 
-            // check if URL value changed:
-            if (gogURL != cacheJSON[0].url) {
-                appId = await getGOGAppId(gogURL);
+			var output = `[
+				{
+					"store_name": "GOG",
+					"url": "${gogURL}",
+					"data": "${appId}"
+				}
+      ]`;
 
-                var output = `[
-                    {
-                        "store_name": "GOG",
-                        "url": "` + gogURL + `",
-                        "data": "` + appId + `"
-                    }
-                ]`;
+			fs.writeFileSync('cache.json', JSON.stringify(JSON.parse(output)));
+		}
 
-                fs.writeFileSync('cache.json', JSON.stringify(JSON.parse(output)));
-            } else {
-                appId = cacheJSON[0].data;
-            };
-        } else {
-            appId = await getGOGAppId(gogURL);
-            
-            var output = `[
-                {
-                    "store_name": "GOG",
-                    "url": "` + gogURL + `",
-                    "data": "` + appId + `"
-                }
-            ]`;
+		// Fetching data from API:
+		return axios
+			.get(`https://api.gog.com/products/${appId}/prices?countryCode=pl`)
+			.then(responseJSON => {
+				// Getting general data:
+				var priceOverview = responseJSON.data._embedded.prices[0];
 
-            fs.writeFileSync('cache.json', JSON.stringify(JSON.parse(output)));
-        };
+				// Getting specified data:
+				var basePrice = formatPrice(priceOverview['basePrice'].replace(' PLN', ''));
+				var discountPrice = formatPrice(priceOverview['finalPrice'].replace(' PLN', ''));
+				var discountPercent = calculateDiscountPercent(basePrice, discountPrice);
 
-        
-        // Fetching data from API:
-        return axios.get("https://api.gog.com/products/" + appId + "/prices?countryCode=pl").then((responseJSON) => {
-            // Getting general data:
-            var priceOverwiew = responseJSON.data._embedded.prices[0];
-
-            // Getting specified data:
-            var basePrice = formatPrice(priceOverwiew['basePrice'].replace(" PLN", ""));
-            var discountPrice = formatPrice(priceOverwiew['finalPrice'].replace(" PLN", ""));
-            var discountPercent = calculateDiscountPercent(basePrice, discountPrice);
-
-            return [basePrice, discountPrice, discountPercent];
-        }).catch((error) => {
-            console.log(error);
-        });
-    } catch(err) {
-        console.error(err);
-    };
-};
+				return [basePrice, discountPrice, discountPercent];
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	} catch (err) {
+		console.error(err);
+	}
+}
 
 exports.getPriceData = getPriceData;
