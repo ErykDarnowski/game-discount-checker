@@ -21,19 +21,19 @@
 
 # game-discount-checker
 
-## Description:
+## Description
 
 A simple CLI tool that scrapes game store websites to check if a game's price got discounted.
 
 ---
 
-### Instructions:
+### Instructions
 
 ```bash
 # 1. Install all packages:
 npm install
 
-# 2. Configue settings and input store URLs in to config.js file
+# 2. Configure settings and input store URLs in to config.js file
 code config.js
 
 # INSTALL / COPY FILES / ALIAS idk. (in /usr/bin)
