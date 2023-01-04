@@ -1,0 +1,1 @@
+{"version":"1.0.0","name":"game-discount-checker","dependencies":{"axios":{"version":"0.26.1"},"puppeteer":{"version":"13.5.2"},"table":{"version":"6.8.0"}}}
