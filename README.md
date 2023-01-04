@@ -1,3 +1,5 @@
+# game-discount-checker
+
 <p align="center">
     <a alt="license" href="http://opensource.org/licenses/MIT">
         <img src="https://img.shields.io/badge/license-MIT-darkergreen.svg?style=flat" />
@@ -19,7 +21,9 @@
     </a>
 </p>
 
-# game-discount-checker
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/81530705/210632291-92195995-7122-49a4-b326-f7bd0e71f1c5.png"></img>
+</p>
 
 ## Description
 
