@@ -25,8 +25,8 @@
   },
   "homepage": "https://github.com/ErykDarnowski/game-discount-checker#readme",
   "dependencies": {
-    "axios": "^0.26.1",
-    "puppeteer": "^13.5.2",
+    "axios": "^1.2.2",
+    "puppeteer": "^19.4.1",
     "table": "^6.8.0"
   }
 }
