@@ -12,7 +12,7 @@ var colors = {
 
 const setColor = (str, color) => {
 	return color + str + end;
-}
+};
 
 module.exports = {
 	setColor: setColor,

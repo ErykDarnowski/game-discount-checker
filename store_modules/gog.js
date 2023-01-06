@@ -3,7 +3,7 @@
 // Imports:
 const { fs, puppeteer, axios, formatPrice, calculateDiscountPercent } = require('../common.js');
 
-const getGOGAppId = async (gogURL) => {
+const getGOGAppId = async gogURL => {
 	const blockedTypes = ['xhr', 'font', 'ping', 'image', 'fetch', 'other', 'media', 'script', 'stylesheet'];
 	const browser = await puppeteer.launch({});
 	const page = await browser.newPage();
@@ -31,9 +31,9 @@ const getGOGAppId = async (gogURL) => {
 	browser.close();
 
 	return appId;
-}
+};
 
-const getPriceData = async (gogURL) => {
+const getPriceData = async gogURL => {
 	const cachePath = './cache.json';
 	var appId = '';
 
@@ -92,6 +92,6 @@ const getPriceData = async (gogURL) => {
 	} catch (err) {
 		console.error(err);
 	}
-}
+};
 
 exports.getPriceData = getPriceData;

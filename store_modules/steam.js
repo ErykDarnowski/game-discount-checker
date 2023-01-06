@@ -7,7 +7,7 @@
 // Imports:
 const { axios, formatPrice } = require('../common.js');
 
-const getPriceData = async (steamURL) => {
+const getPriceData = async steamURL => {
 	let splitURL = steamURL.split('app');
 	let gameId = splitURL[1].split('/')[1];
 	let apiURL = splitURL[0] + 'api/appdetails?appids=' + gameId + '&cc=PLN';
@@ -29,6 +29,6 @@ const getPriceData = async (steamURL) => {
 		.catch(error => {
 			console.log(error);
 		});
-}
+};
 
 exports.getPriceData = getPriceData;
