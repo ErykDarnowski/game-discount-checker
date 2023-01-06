@@ -1,8 +1,9 @@
-.DS_Store
-.vscode
-.prettierrc
-
 cache.json
+
+
+# Misc
+.vscode
+.DS_Store
 
 # Logs
 logs
