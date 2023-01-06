@@ -1,69 +1,56 @@
 // Imports:
 const { puppeteer, formatPriceToFloat } = require('../common.js');
 
-const getPriceData = async (epicURL) => {
-	const blockedTypes = ['xhr', 'font', 'image', 'media', 'script', 'stylesheet'];
+const getPriceData = async epicURL => {
+	// Puppeteer setup:
+	const blockedTypes = ['xhr', 'font', 'image', 'media', 'other', 'script', 'stylesheet'];
 	const browser = await puppeteer.launch({});
 	const page = await browser.newPage();
 
+	// Additional setup:
 	await page.setCacheEnabled(false);
 	await page.setRequestInterception(true);
+	await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36');
+	// ^ Fix for epic asking for verification instead of loading:
 
+	// Filtering out unwanted requests (major speed up):
 	page.on('request', req => {
-		const url = req.url();
-
 		// Blocking types of unneeded requests:
 		if (blockedTypes.includes(req.resourceType())) {
 			req.abort();
 		} else {
-			//console.log(req.resourceType() + " = " + url);
+			//console.log(req.resourceType() + " = " + req.url());
 			req.continue();
 		}
 	});
 
+	// Loading page:
 	await page.goto(epicURL);
 
-	/*
-	var schemaJSON = await page.evaluate(
-		() => document.querySelector('script[type="application/ld+json"]').innerText
-	);
+	// Getting prices element - either single price or the discount %, base and discounted prices:
+	const pricesStringEl = await page.waitForXPath("//*[*/*/*/*/text()[contains(.,'zł')][string-length() <= 10]]"); // ("//div[div/div/div/span/text()[contains(.,'zł')][string-length() <= 10]]" <- makes the XPath more rigid and less flexible for small changes):
 
-	var priceLayout = [JSON.parse(schemaJSON)["offers"][0]["priceSpecification"]["price"]];
-
-	@ First run:
-	- Get base price from PriceLayout el
-	- Save in cache
-
-	@ Next runs:
-	- Get current price from _schemaOrgMarkup-Product JSON el
-	- Compare to cached value and calculate diff
-
-	^ check speed
-  */
-
-	var element = await page.waitForSelector('[data-component="PriceLayout"]');
-	var priceLayout = await page.evaluate(element => element.innerText, element);
-	priceLayout = priceLayout.replaceAll('PLN ', '').split('\n');
+	// Getting text from prices element:
+	const pricesString = await page.evaluate(pricesStringEl => pricesStringEl.innerText, pricesStringEl);
 
 	browser.close();
 
-	// Check if discount:
-	var priceDataArr = [];
-	if (priceLayout.length == 1) {
-		var basePrice = formatPriceToFloat(priceLayout[0]);
+	// Getting discount %, base and discounted prices from string:
+	const pricesArray = pricesString.match(new RegExp('[0-9,?]{1,}', 'g')).map(el => formatPriceToFloat(el));
 
-		//console.log(basePrice + "zł");
-		priceDataArr = [basePrice, basePrice, 0];
+	// Checking if game is discounted or not + formatting output:
+	if (pricesArray.length !== 1) {
+		return [pricesArray[1], pricesArray[2], pricesArray[0]];
 	} else {
-		var basePrice = formatPriceToFloat(priceLayout[1]);
-		var discountPrice = formatPriceToFloat(priceLayout[2]);
-		var discountPercent = Math.round(parseFloat(priceLayout[0].replace('-', '').replace('%', '')));
-
-		//console.log(basePrice + "zł -> " + discountPrice + "zł = -" + discountPercent + "%");
-		priceDataArr = [basePrice, discountPrice, discountPercent];
+		return [pricesArray[0], pricesArray[0], 0];
 	}
+};
 
-	return priceDataArr;
-}
+/* Test:
+(async () => {
+	console.log(await getPriceData("https://store.epicgames.com/p/cyberpunk-2077"));
+})();
+*/
 
+//module.exports = getPriceData;
 exports.getPriceData = getPriceData;
