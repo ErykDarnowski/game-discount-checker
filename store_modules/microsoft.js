@@ -3,8 +3,8 @@
 // Imports:
 const { axios, formatPriceToFloat, calculateDiscountPercent } = require('../common.js');
 
-const getPriceData = async (microsoft_URL) => {
-	var productId = microsoft_URL.split('?')[0].split('/').pop();
+const getPriceData = async microsoft_URL => {
+	const productId = microsoft_URL.match(new RegExp('[a-zA-Z0-9]{12}'))[0];
 
 	// Fetching data from API:
 	return axios
@@ -31,6 +31,6 @@ const getPriceData = async (microsoft_URL) => {
 		.catch(error => {
 			console.log(error);
 		});
-}
+};
 
 exports.getPriceData = getPriceData;
