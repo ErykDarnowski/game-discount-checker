@@ -76,10 +76,33 @@ const priceSpinner = new Spinner('@ Fetching prices');
 		columnDefault: {
 			width: 10,
 		},
-		columns: [{ alignment: 'left' }, { alignment: 'center' }, { alignment: 'center' }, { alignment: 'right' }],
+		columns: [
+			{
+				alignment: 'left',
+			},
+			{
+				alignment: 'center',
+			},
+			{
+				alignment: 'center',
+			},
+			{
+				alignment: 'right',
+			},
+		],
 		spanningCells: [
-			{ col: 0, row: 0, colSpan: 1, alignment: 'center' },
-			{ col: 3, row: 0, colSpan: 1, alignment: 'center' },
+			{
+				col: 0,
+				row: 0,
+				colSpan: 1,
+				alignment: 'center',
+			},
+			{
+				col: 3,
+				row: 0,
+				colSpan: 1,
+				alignment: 'center',
+			},
 		],
 
 		// REMOVE TO GET BACK THICK BORDER TABLE (the default one):
