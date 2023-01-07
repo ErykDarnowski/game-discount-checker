@@ -40,12 +40,14 @@ var priceSpinner = new Spinner('@ Fetching prices');
 
 	var prices = [['GOG'].concat(gogPriceArr), ['Epic'].concat(epicPriceArr), ['Steam'].concat(steamPriceArr), ['Microsoft'].concat(microsoftPriceArr)];
 
-	// Sorted by discounted price from highest to lowest:
+	// Sorting by discounted price from highest to lowest:
 	var sortedPrices = prices.sort((a, b) => b[2] - a[2]);
-	var moneySaved = (sortedPrices[0][2] - sortedPrices[sortedPrices.length - 1][2]).toFixed(2);
+
+	// Getting money saved:
+	const moneySaved = (sortedPrices[0][2] - sortedPrices[sortedPrices.length - 1][2]).toFixed(2);
 
 	// Saving highest price (for later msg) before it's formatted in to a string:
-	var highestPrice = sortedPrices[0][2];
+	const highestPrice = sortedPrices[0][2];
 
 	// Formatting values:
 	sortedPrices.map(el => {
@@ -53,9 +55,17 @@ var priceSpinner = new Spinner('@ Fetching prices');
 		el[2] += ' zł';
 		el[3] = `-${el[3]}%`;
 	});
+	// Getting percent of money saved:
+	const percentSaved = Math.round((moneySaved * 100) / highestPrice);
 
 	// Populating table data with sorted prices:
 	const data = [['STORE', 'BASE', 'CURRENT', 'DISCOUNT']];
+	// Getting names of stores where the game is the cheapest:
+	const cheapestStores = sortedPrices
+		.filter(el => el[2] === sortedPrices[sortedPrices.length - 1][2]) // <- filter out values that are more expensive than cheapest one
+		.map(el => el[0].toUpperCase()) // <- only get names of stores and make them upper case
+		.join(' | '); // <- add nice join formatting
+
 	sortedPrices.map(el => {
 		data.push(el);
 	});
@@ -100,12 +110,9 @@ var priceSpinner = new Spinner('@ Fetching prices');
 	// Printing table:
 	console.log('\n' + table(data, tableConfig));
 
-	// How much you can save msg:
+	// Printing how much you can save and where you should buy the game:
 	console.log(
-		'@ You can save: ' +
-			setColor(moneySaved + 'zł (' + Math.round((moneySaved * 100) / highestPrice) + '%) ', colors['highlightColor']) +
-			'by buying the game on: ' +
-			setColor('{' + sortedPrices[sortedPrices.length - 1][0].toUpperCase() + '}', colors['store'])
+		`@ You can save: ${setColor(`${moneySaved} zł (${percentSaved}%)`, colors['highlightColor'])} by buying the game on: ${setColor(`{${cheapestStores}}`, colors['store'])}!`
 	);
 
 	var endTime = performance.now();
