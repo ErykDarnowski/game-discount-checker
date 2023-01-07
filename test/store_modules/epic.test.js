@@ -1,6 +1,8 @@
 // Imports
 const { exec } = require('child_process');
+
 const getPriceData = require('../../store_modules/epic.js').getPriceData;
+
 
 // Starting up web server (so we don't repeatedly hit epic's servers):
 const server = exec('npm run server');

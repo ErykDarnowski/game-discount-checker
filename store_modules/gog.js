@@ -1,7 +1,12 @@
 // gog api: https://gogapidocs.readthedocs.io/en/latest/
 
 // Imports:
-const { fs, puppeteer, axios, formatPrice, calculateDiscountPercent } = require('../common.js');
+const fs = require('fs');
+const axios = require('axios');
+const puppeteer = require('puppeteer');
+
+const { formatPrice, calculateDiscountPercent } = require('../common.js');
+
 
 const getGOGAppId = async gogURL => {
 	const blockedTypes = ['xhr', 'font', 'ping', 'image', 'fetch', 'other', 'media', 'script', 'stylesheet'];

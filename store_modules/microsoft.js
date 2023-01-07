@@ -1,7 +1,10 @@
 // microsoft api github: https://github.com/ThomasPe/MS-Store-API
 
 // Imports:
-const { axios, formatPriceToFloat, calculateDiscountPercent } = require('../common.js');
+const axios = require('axios');
+
+const { formatPriceToFloat, calculateDiscountPercent } = require('../common.js');
+
 
 const getPriceData = async microsoft_URL => {
 	const productId = microsoft_URL.match(new RegExp('[a-zA-Z0-9]{12}'))[0];

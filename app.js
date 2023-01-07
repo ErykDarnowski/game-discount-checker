@@ -1,12 +1,14 @@
 // Imports:
 const fs = require('fs');
 const { table } = require('table');
-const { Spinner } = require('./spinner.js');
+
 const { setColor, colors } = require('./colors.js');
+const { Spinner } = require('./spinner.js');
 const gog = require('./store_modules/gog.js');
 const epic = require('./store_modules/epic.js');
 const steam = require('./store_modules/steam.js');
 const microsoft = require('./store_modules/microsoft.js');
+
 
 // Starting execution timer:
 const startTime = performance.now();

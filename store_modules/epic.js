@@ -1,5 +1,8 @@
 // Imports:
-const { puppeteer, formatPriceToFloat } = require('../common.js');
+const puppeteer = require('puppeteer');
+
+const { formatPriceToFloat } = require('../common.js');
+
 
 const getPriceData = async epicURL => {
 	// Puppeteer setup:

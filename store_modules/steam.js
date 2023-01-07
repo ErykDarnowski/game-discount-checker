@@ -5,7 +5,10 @@
 */
 
 // Imports:
-const { axios, formatPrice } = require('../common.js');
+const axios = require('axios');
+
+const { formatPrice } = require('../common.js');
+
 
 const getPriceData = async steamURL => {
 	const [gameId] = steamURL.match(new RegExp('(?<=/)[0-9]{1,}'));

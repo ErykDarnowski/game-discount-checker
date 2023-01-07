@@ -1,8 +1,3 @@
-// Imports:
-const fs = require('fs');
-const axios = require('axios');
-const puppeteer = require('puppeteer');
-
 // Funcs:
 // Adds "." before 2 numbers from end [example: 10799 -> 107.99]:
 const formatPrice = priceInt => {
@@ -21,10 +16,7 @@ const calculateDiscountPercent = (basePrice, discountPrice) => {
 };
 
 module.exports = {
-	fs,
-	axios,
-	puppeteer,
-	formatPrice,
-	formatPriceToFloat,
 	calculateDiscountPercent,
+	formatPriceToFloat,
+	formatPrice,
 };
