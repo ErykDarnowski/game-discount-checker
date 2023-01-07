@@ -1,5 +1,3 @@
-var startTime = performance.now();
-
 // Imports:
 const fs = require('fs');
 const { table } = require('table');
@@ -9,6 +7,9 @@ const gog = require('./store_modules/gog.js');
 const epic = require('./store_modules/epic.js');
 const steam = require('./store_modules/steam.js');
 const microsoft = require('./store_modules/microsoft.js');
+
+// Starting execution timer:
+var startTime = performance.now();
 
 // Getting data from config.json:  [better json reading? https://stackabuse.com/reading-and-writing-json-files-with-node-js/]
 let rawData = fs.readFileSync('config.json');
