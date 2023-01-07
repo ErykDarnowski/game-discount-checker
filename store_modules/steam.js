@@ -8,9 +8,8 @@
 const { axios, formatPrice } = require('../common.js');
 
 const getPriceData = async steamURL => {
-	const splitURL = steamURL.split('app');
-	const gameId = splitURL[1].split('/')[1];
-	const apiURL = splitURL[0] + 'api/appdetails?appids=' + gameId + '&cc=PLN';
+	const [gameId] = steamURL.match(new RegExp('(?<=/)[0-9]{1,}'));
+	const apiURL = `https://store.steampowered.com/api/appdetails?appids=${gameId}&cc=PLN`;
 
 	// Fetching data from API:
 	return axios
