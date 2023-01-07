@@ -1,8 +1,8 @@
 // More colors: https://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-debug-ansi.html
 
-var start = '\x1b[';
-var end = start + '0m';
-var colors = {
+const start = '\x1b[';
+const end = start + '0m';
+const colors = {
 	store: start + '35m',
 	highlightColor: start + '31m',
 	spinner: start + '36m',

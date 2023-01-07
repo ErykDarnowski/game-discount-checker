@@ -5,10 +5,10 @@ const puppeteer = require('puppeteer');
 
 // Funcs:
 // Adds "." before 2 numbers from end [example: 10799 -> 107.99]:
-	var priceArr = String(priceInt).split('');
-	return parseFloat(priceArr.slice(0, priceArr.length - 2).join('') + '.' + priceArr.slice(priceArr.length - 2, priceArr.length).join(''));
-}
 const formatPrice = priceInt => {
+	const priceStr = String(priceInt);
+	return parseFloat(priceStr.slice(0, -2) + '.' + priceStr.slice(-2));
+};
 
 // Changes "," in price str to "." and formats it to a float:
 const formatPriceToFloat = price => {
@@ -21,10 +21,10 @@ const calculateDiscountPercent = (basePrice, discountPrice) => {
 };
 
 module.exports = {
-	fs: fs,
-	axios: axios,
-	puppeteer: puppeteer,
-	formatPrice: formatPrice,
-	formatPriceToFloat: formatPriceToFloat,
-	calculateDiscountPercent: calculateDiscountPercent,
+	fs,
+	axios,
+	puppeteer,
+	formatPrice,
+	formatPriceToFloat,
+	calculateDiscountPercent,
 };

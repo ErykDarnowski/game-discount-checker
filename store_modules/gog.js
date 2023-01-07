@@ -7,7 +7,7 @@ const getGOGAppId = async gogURL => {
 	const blockedTypes = ['xhr', 'font', 'ping', 'image', 'fetch', 'other', 'media', 'script', 'stylesheet'];
 	const browser = await puppeteer.launch({});
 	const page = await browser.newPage();
-	var appId = '';
+	let appId = '';
 
 	await page.setCacheEnabled(false);
 	await page.setRequestInterception(true);
@@ -35,18 +35,18 @@ const getGOGAppId = async gogURL => {
 
 const getPriceData = async gogURL => {
 	const cachePath = './cache.json';
-	var appId = '';
+	let appId = '';
 
 	// Checking if cache file exists:
 	try {
 		if (fs.existsSync(cachePath)) {
-			var cacheJSON = JSON.parse(fs.readFileSync('cache.json'));
+			const cacheJSON = JSON.parse(fs.readFileSync('cache.json'));
 
 			// check if URL value changed:
 			if (gogURL != cacheJSON[0].url) {
 				appId = await getGOGAppId(gogURL);
 
-				var output = `[
+				const output = `[
 					{
 						"store_name": "GOG",
 						"url": "${gogURL}",
@@ -61,7 +61,7 @@ const getPriceData = async gogURL => {
 		} else {
 			appId = await getGOGAppId(gogURL);
 
-			var output = `[
+			const output = `[
 				{
 					"store_name": "GOG",
 					"url": "${gogURL}",
@@ -77,12 +77,12 @@ const getPriceData = async gogURL => {
 			.get(`https://api.gog.com/products/${appId}/prices?countryCode=pl`)
 			.then(responseJSON => {
 				// Getting general data:
-				var priceOverview = responseJSON.data._embedded.prices[0];
+				const priceOverview = responseJSON.data._embedded.prices[0];
 
 				// Getting specified data:
-				var basePrice = formatPrice(priceOverview['basePrice'].replace(' PLN', ''));
-				var discountPrice = formatPrice(priceOverview['finalPrice'].replace(' PLN', ''));
-				var discountPercent = calculateDiscountPercent(basePrice, discountPrice);
+				const basePrice = formatPrice(priceOverview['basePrice'].replace(' PLN', ''));
+				const discountPrice = formatPrice(priceOverview['finalPrice'].replace(' PLN', ''));
+				const discountPercent = calculateDiscountPercent(basePrice, discountPrice);
 
 				return [basePrice, discountPrice, discountPercent];
 			})

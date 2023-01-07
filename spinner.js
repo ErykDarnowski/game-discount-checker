@@ -283,25 +283,9 @@ class Spinner {
 	}
 
 	start() {
-		var interval = 70;
-		var frameNum = 0;
-		var frames = [
-			'[    ]',
-			'[=   ]',
-			'[==  ]',
-			'[=== ]',
-			'[ ===]',
-			'[  ==]',
-			'[   =]',
-			'[    ]',
-			'[   =]',
-			'[  ==]',
-			'[ ===]',
-			'[====]',
-			'[=== ]',
-			'[==  ]',
-			'[=   ]',
-		];
+		const interval = 70;
+		let frameNum = 0;
+		const frames = ['[    ]', '[=   ]', '[==  ]', '[=== ]', '[ ===]', '[  ==]', '[   =]', '[    ]', '[   =]', '[  ==]', '[ ===]', '[====]', '[=== ]', '[==  ]', '[=   ]'];
 
 		this.timer = setInterval(() => {
 			process.stdout.write('\r' + this.msg + setColor(frames[frameNum++], colors['spinner']));
@@ -316,7 +300,8 @@ class Spinner {
 }
 
 /* Test:
-var testSpinner = new Spinner("@ Fetching price from " + setColor("{GOG}", colors["store"]));
+const testSpinner = new Spinner("@ Fetching price from " + setColor("{GOG}", colors["store"]));
+
 testSpinner.start();
 setTimeout(() => {
     testSpinner.stop();

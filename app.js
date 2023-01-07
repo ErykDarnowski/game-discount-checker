@@ -9,7 +9,7 @@ const steam = require('./store_modules/steam.js');
 const microsoft = require('./store_modules/microsoft.js');
 
 // Starting execution timer:
-var startTime = performance.now();
+const startTime = performance.now();
 
 // Getting data from config.json:  [better json reading? https://stackabuse.com/reading-and-writing-json-files-with-node-js/]
 const rawData = fs.readFileSync('config.json');
@@ -42,10 +42,10 @@ const priceSpinner = new Spinner('@ Fetching prices');
 	]);
 	priceSpinner.stop();
 
-	var prices = [['GOG'].concat(gogPriceArr), ['Epic'].concat(epicPriceArr), ['Steam'].concat(steamPriceArr), ['Microsoft'].concat(microsoftPriceArr)];
+	const prices = [['GOG'].concat(gogPriceArr), ['Epic'].concat(epicPriceArr), ['Steam'].concat(steamPriceArr), ['Microsoft'].concat(microsoftPriceArr)];
 
 	// Sorting by discounted price from highest to lowest:
-	var sortedPrices = prices.sort((a, b) => b[2] - a[2]);
+	const sortedPrices = prices.sort((a, b) => b[2] - a[2]);
 
 	// Getting money saved:
 	const moneySaved = (sortedPrices[0][2] - sortedPrices[sortedPrices.length - 1][2]).toFixed(2);

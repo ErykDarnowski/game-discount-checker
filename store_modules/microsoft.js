@@ -19,12 +19,12 @@ const getPriceData = async microsoft_URL => {
 		)
 		.then(responseJSON => {
 			// Getting general data:
-			var priceData = responseJSON.data.Products[0].DisplaySkuAvailabilities[0].Availabilities[0].OrderManagementData.Price;
+			const priceData = responseJSON.data.Products[0].DisplaySkuAvailabilities[0].Availabilities[0].OrderManagementData.Price;
 
 			// Getting specific data:
-			var basePrice = formatPriceToFloat(priceData['MSRP']);
-			var discountPrice = formatPriceToFloat(priceData['ListPrice']);
-			var discountPercent = calculateDiscountPercent(basePrice, discountPrice);
+			const basePrice = formatPriceToFloat(priceData['MSRP']);
+			const discountPrice = formatPriceToFloat(priceData['ListPrice']);
+			const discountPercent = calculateDiscountPercent(basePrice, discountPrice);
 
 			return [basePrice, discountPrice, discountPercent];
 		})
