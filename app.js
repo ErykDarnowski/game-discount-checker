@@ -1,5 +1,3 @@
-var startTime = performance.now();
-
 // Imports:
 const fs = require('fs');
 const { table } = require('table');
@@ -10,24 +8,30 @@ const epic = require('./store_modules/epic.js');
 const steam = require('./store_modules/steam.js');
 const microsoft = require('./store_modules/microsoft.js');
 
+// Starting execution timer:
+var startTime = performance.now();
+
 // Getting data from config.json:  [better json reading? https://stackabuse.com/reading-and-writing-json-files-with-node-js/]
-let rawData = fs.readFileSync('config.json');
-let parsedData = JSON.parse(rawData);
+const rawData = fs.readFileSync('config.json');
+const parsedData = JSON.parse(rawData);
 
 // Vars:
-var config = parsedData['config'];
-var gameInfo = parsedData['game_info'];
+//const config = parsedData['config'];
+const gameInfo = parsedData['game_info'];
 
-var gameTitle = gameInfo['title'];
+const gameTitle = gameInfo['title'];
 
-var gogURL = gameInfo['gog_URL'];
-var epicURL = gameInfo['epic_URL'];
-var steamURL = gameInfo['steam_URL'];
-var microsoftURL = gameInfo['microsoft_URL'];
+const gogURL = gameInfo['gog_URL'];
+const epicURL = gameInfo['epic_URL'];
+const steamURL = gameInfo['steam_URL'];
+const microsoftURL = gameInfo['microsoft_URL'];
 
-var priceSpinner = new Spinner('@ Fetching prices');
+const priceSpinner = new Spinner('@ Fetching prices');
 
 (async () => {
+	// Clear terminal:
+	//console.clear();
+
 	// Showing spinner and loading price data from each store_modules file:
 	priceSpinner.start();
 	const [gogPriceArr, epicPriceArr, steamPriceArr, microsoftPriceArr] = await Promise.all([
@@ -40,24 +44,28 @@ var priceSpinner = new Spinner('@ Fetching prices');
 
 	var prices = [['GOG'].concat(gogPriceArr), ['Epic'].concat(epicPriceArr), ['Steam'].concat(steamPriceArr), ['Microsoft'].concat(microsoftPriceArr)];
 
-	// Sorted by discounted price from highest to lowest:
+	// Sorting by discounted price from highest to lowest:
 	var sortedPrices = prices.sort((a, b) => b[2] - a[2]);
-	var moneySaved = (sortedPrices[0][2] - sortedPrices[sortedPrices.length - 1][2]).toFixed(2);
+
+	// Getting money saved:
+	const moneySaved = (sortedPrices[0][2] - sortedPrices[sortedPrices.length - 1][2]).toFixed(2);
 
 	// Saving highest price (for later msg) before it's formatted in to a string:
-	var highestPrice = sortedPrices[0][2];
+	const highestPrice = sortedPrices[0][2];
 
-	// Formatting values:
-	sortedPrices.map(el => {
-		el[1] += ' zł';
-		el[2] += ' zł';
-		el[3] = `-${el[3]}%`;
-	});
+	// Getting percent of money saved:
+	const percentSaved = Math.round((moneySaved * 100) / highestPrice);
 
-	// Populating table data with sorted prices:
-	const data = [['STORE', 'BASE', 'CURRENT', 'DISCOUNT']];
+	// Getting names of stores where the game is the cheapest:
+	const cheapestStores = sortedPrices
+		.filter(el => el[2] === sortedPrices[sortedPrices.length - 1][2]) // <- filter out values that are more expensive than cheapest one
+		.map(el => el[0].toUpperCase()) // <- only get names of stores and make them upper case
+		.join(' | '); // <- add nice join formatting
+
+	// Formatting the values and populating the table data:
+	const tableData = [['STORE', 'BASE', 'CURRENT', 'DISCOUNT']];
 	sortedPrices.map(el => {
-		data.push(el);
+		tableData.push([el[0], `${el[1]} zł`, `${el[2]} zł`, `-${el[3]}%`]);
 	});
 
 	// Setting up table:
@@ -68,10 +76,33 @@ var priceSpinner = new Spinner('@ Fetching prices');
 		columnDefault: {
 			width: 10,
 		},
-		columns: [{ alignment: 'left' }, { alignment: 'center' }, { alignment: 'center' }, { alignment: 'right' }],
+		columns: [
+			{
+				alignment: 'left',
+			},
+			{
+				alignment: 'center',
+			},
+			{
+				alignment: 'center',
+			},
+			{
+				alignment: 'right',
+			},
+		],
 		spanningCells: [
-			{ col: 0, row: 0, colSpan: 1, alignment: 'center' },
-			{ col: 3, row: 0, colSpan: 1, alignment: 'center' },
+			{
+				col: 0,
+				row: 0,
+				colSpan: 1,
+				alignment: 'center',
+			},
+			{
+				col: 3,
+				row: 0,
+				colSpan: 1,
+				alignment: 'center',
+			},
 		],
 
 		// REMOVE TO GET BACK THICK BORDER TABLE (the default one):
@@ -97,17 +128,15 @@ var priceSpinner = new Spinner('@ Fetching prices');
 		},
 	};
 
-	// Printing table:
-	console.log('\n' + table(data, tableConfig));
+	// Printing stores + prices table:
+	console.log(`\n${table(tableData, tableConfig)}`);
 
-	// How much you can save msg:
+	// Printing how much you can save and where you should buy the game:
 	console.log(
-		'@ You can save: ' +
-			setColor(moneySaved + 'zł (' + Math.round((moneySaved * 100) / highestPrice) + '%) ', colors['highlightColor']) +
-			'by buying the game on: ' +
-			setColor('{' + sortedPrices[sortedPrices.length - 1][0].toUpperCase() + '}', colors['store'])
+		`@ You can save: ${setColor(`${moneySaved} zł (${percentSaved}%)`, colors['highlightColor'])} by buying the game on: ${setColor(`{${cheapestStores}}`, colors['store'])}!`
 	);
 
-	var endTime = performance.now();
-	console.log('\n' + (endTime - startTime).toFixed(2));
+	// Printing execution time:
+	const endTime = performance.now();
+	console.log(`\nDone in: ${(endTime - startTime).toFixed(2)} ms`);
 })();
