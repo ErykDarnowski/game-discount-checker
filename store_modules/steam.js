@@ -18,18 +18,21 @@ const getPriceData = async steamURL => {
 	return axios
 		.get(apiURL)
 		.then(responseJSON => {
-			// Getting general data:
-			const priceOverview = responseJSON.data[gameId].data.price_overview;
+			// Extracting price data:
+			const {
+				initial: basePrice,
+				final: discountPrice,
+				discount_percent: discountPercent,
+			} = responseJSON['data'][gameId]['data']['price_overview'];
 
-			// Getting specific data:
-			const basePrice = formatPrice(priceOverview['initial']);
-			const discountPrice = formatPrice(priceOverview['final']);
-			const discountPercent = priceOverview['discount_percent'];
-
-			return [basePrice, discountPrice, discountPercent];
+			return [
+				formatPrice(basePrice),
+				formatPrice(discountPrice),
+				discountPercent,
+			];
 		})
 		.catch(error => {
-			console.log(error);
+			console.error(error);
 		});
 };
 

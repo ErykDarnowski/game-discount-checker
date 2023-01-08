@@ -31,22 +31,24 @@ const getPriceData = async epicURL => {
 	await page.goto(epicURL);
 
 	// Getting prices element - either single price or the discount %, base and discounted prices:
-	const pricesStringEl = await page.waitForXPath("//*[*/*/*/*/text()[contains(.,'zł')][string-length() <= 10]]"); // ("//div[div/div/div/span/text()[contains(.,'zł')][string-length() <= 10]]" <- makes the XPath more rigid and less flexible for small changes):
+	const pricesStringEl = await page.waitForXPath("//*[*/*/*/*/text()[contains(.,'zł')][string-length() <= 10]]"); // ("//div[div/div/div/span/text()[contains(.,'zł')][string-length() <= 10]]" <- makes the XPath more rigid and less flexible for small changes)
 
 	// Getting text from prices element:
 	const pricesString = await page.evaluate(pricesStringEl => pricesStringEl.innerText, pricesStringEl);
 
-	browser.close();
+	browser.close(); // await?
 
-	// Getting discount %, base and discounted prices from string:
-	const pricesArray = pricesString.match(new RegExp('[0-9,?]{1,}', 'g')).map(el => formatPriceToFloat(el));
+	// Extracting price data:
+	let pricesArray = pricesString.match(new RegExp('[0-9,?]{1,}', 'g')).map(el => formatPriceToFloat(el));
 
-	// Checking if game is discounted or not + formatting output:
-	if (pricesArray.length !== 1) {
-		return [pricesArray[1], pricesArray[2], pricesArray[0]];
-	} else {
-		return [pricesArray[0], pricesArray[0], 0];
-	}
+	// Different formatting if game is NOT discounted:
+	pricesArray = pricesArray.length === 1 ? [0, pricesArray[0], pricesArray[0]] : pricesArray;
+	// checks whether something like this `[ 200 ]` or this `[ 50, 200, 100 ]` is returned
+
+	// Moving discount percent value from start to end of array (to stay consistant with other store modules):
+	pricesArray.push(pricesArray.shift());
+
+	return pricesArray;
 };
 
 /* Test:

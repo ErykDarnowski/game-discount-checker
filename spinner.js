@@ -277,30 +277,47 @@
 // Imports:
 const { setColor, colors } = require('./colors.js');
 
+
 class Spinner {
 	constructor(msg) {
 		this.msg = msg + ' ';
 	}
 
-	start() {
-		const interval = 70;
+	start = () => {
 		let frameNum = 0;
-		const frames = ['[    ]', '[=   ]', '[==  ]', '[=== ]', '[ ===]', '[  ==]', '[   =]', '[    ]', '[   =]', '[  ==]', '[ ===]', '[====]', '[=== ]', '[==  ]', '[=   ]'];
+		const interval = 70;
+		const frames = [
+			'[    ]',
+			'[=   ]',
+			'[==  ]',
+			'[=== ]',
+			'[ ===]',
+			'[  ==]',
+			'[   =]',
+			'[    ]',
+			'[   =]',
+			'[  ==]',
+			'[ ===]',
+			'[====]',
+			'[=== ]',
+			'[==  ]',
+			'[=   ]',
+		];
 
 		this.timer = setInterval(() => {
-			process.stdout.write('\r' + this.msg + setColor(frames[frameNum++], colors['spinner']));
+			process.stdout.write('\r' + this.msg + setColor(frames[frameNum++], colors.spinner));
 			frameNum %= frames.length;
 		}, interval);
-	}
+	};
 
-	stop(errState = false) {
+	stop = (errState = false) => {
 		clearInterval(this.timer);
-		process.stdout.write('\r' + this.msg + (errState ? setColor('[ ERR ]', colors['spinnerErr']) : setColor('[ OK ]', colors['spinnerOk'])) + '\n');
-	}
+		process.stdout.write('\r' + this.msg + (errState ? setColor('[ ERR ]', colors.spinnerErr) : setColor('[ OK ]', colors.spinnerOk)) + '\n');
+	};
 }
 
 /* Test:
-const testSpinner = new Spinner("@ Fetching price from " + setColor("{GOG}", colors["store"]));
+const testSpinner = new Spinner("@ Fetching price from " + setColor("{GOG}", colors.store));
 
 testSpinner.start();
 setTimeout(() => {

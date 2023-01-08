@@ -19,14 +19,13 @@ const parsedData = JSON.parse(rawData);
 
 // Vars:
 //const config = parsedData['config'];
-const gameInfo = parsedData['game_info'];
-
-const gameTitle = gameInfo['title'];
-
-const gogURL = gameInfo['gog_URL'];
-const epicURL = gameInfo['epic_URL'];
-const steamURL = gameInfo['steam_URL'];
-const microsoftURL = gameInfo['microsoft_URL'];
+const {
+	title: gameTitle,
+	gog_URL: gogURL,
+	epic_URL: epicURL,
+	steam_URL: steamURL,
+	microsoft_URL: microsoftURL
+} = parsedData['game_info'];
 
 const priceSpinner = new Spinner('@ Fetching prices');
 
@@ -44,13 +43,18 @@ const priceSpinner = new Spinner('@ Fetching prices');
 	]);
 	priceSpinner.stop();
 
-	const prices = [['GOG'].concat(gogPriceArr), ['Epic'].concat(epicPriceArr), ['Steam'].concat(steamPriceArr), ['Microsoft'].concat(microsoftPriceArr)];
+	const prices = [
+		['GOG', ...gogPriceArr],
+		['Epic', ...epicPriceArr],
+		['Steam', ...steamPriceArr],
+		['Microsoft', ...microsoftPriceArr],
+	];
 
 	// Sorting by discounted price from highest to lowest:
 	const sortedPrices = prices.sort((a, b) => b[2] - a[2]);
 
 	// Getting money saved:
-	const moneySaved = (sortedPrices[0][2] - sortedPrices[sortedPrices.length - 1][2]).toFixed(2);
+	const moneySaved = (sortedPrices[0][2] - sortedPrices.at(-1)[2]).toFixed(2);
 
 	// Saving highest price (for later msg) before it's formatted in to a string:
 	const highestPrice = sortedPrices[0][2];
@@ -58,15 +62,21 @@ const priceSpinner = new Spinner('@ Fetching prices');
 	// Getting percent of money saved:
 	const percentSaved = Math.round((moneySaved * 100) / highestPrice);
 
-	// Getting names of stores where the game is the cheapest:
+	// Getting names of store/s where the game is the cheapest:
 	const cheapestStores = sortedPrices
-		.filter(el => el[2] === sortedPrices[sortedPrices.length - 1][2]) // <- filter out values that are more expensive than cheapest one
-		.map(el => el[0].toUpperCase()) // <- only get names of stores and make them upper case
-		.join(' | '); // <- add nice join formatting
+		.reduce((accumulatorArr, currPricesArr) => {
+			// Filter out arrays where the discount price is higher than the cheapest one:
+			if (currPricesArr[2] === sortedPrices.at(-1)[2]) {
+				accumulatorArr.push(currPricesArr[0].toUpperCase()); // <- only get names of stores and format them
+			}
+
+			return accumulatorArr;
+		}, [])
+		.join(' / '); // <- add nice join formatting
 
 	// Formatting the values and populating the table data:
 	const tableData = [['STORE', 'BASE', 'CURRENT', 'DISCOUNT']];
-	sortedPrices.map(el => {
+	sortedPrices.forEach(el => {
 		tableData.push([el[0], `${el[1]} zł`, `${el[2]} zł`, `-${el[3]}%`]);
 	});
 
@@ -135,7 +145,7 @@ const priceSpinner = new Spinner('@ Fetching prices');
 
 	// Printing how much you can save and where you should buy the game:
 	console.log(
-		`@ You can save: ${setColor(`${moneySaved} zł (${percentSaved}%)`, colors['highlightColor'])} by buying the game on: ${setColor(`{${cheapestStores}}`, colors['store'])}!`
+		`@ You can save: ${setColor(`${moneySaved} zł (${percentSaved}%)`, colors.highlightColor)} by buying the game on: ${setColor(`{${cheapestStores}}`, colors.store)}!`
 	);
 
 	// Printing execution time:

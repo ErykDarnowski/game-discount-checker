@@ -7,7 +7,7 @@ const { formatPriceToFloat, calculateDiscountPercent } = require('../common.js')
 
 
 const getPriceData = async microsoft_URL => {
-	const productId = microsoft_URL.match(new RegExp('[a-zA-Z0-9]{12}'))[0];
+	const [productId] = microsoft_URL.match(new RegExp('[a-zA-Z0-9]{12}'));
 
 	// Fetching data from API:
 	return axios
@@ -21,18 +21,20 @@ const getPriceData = async microsoft_URL => {
 			}
 		)
 		.then(responseJSON => {
-			// Getting general data:
-			const priceData = responseJSON.data.Products[0].DisplaySkuAvailabilities[0].Availabilities[0].OrderManagementData.Price;
+			// Extracting price data:
+			const {
+				MSRP: basePrice,
+				ListPrice: discountPrice,
+			} = responseJSON['data']['Products'][0]['DisplaySkuAvailabilities'][0]['Availabilities'][0]['OrderManagementData']['Price'];
 
-			// Getting specific data:
-			const basePrice = formatPriceToFloat(priceData['MSRP']);
-			const discountPrice = formatPriceToFloat(priceData['ListPrice']);
-			const discountPercent = calculateDiscountPercent(basePrice, discountPrice);
-
-			return [basePrice, discountPrice, discountPercent];
+			return [
+				formatPriceToFloat(basePrice),
+				formatPriceToFloat(discountPrice),
+				calculateDiscountPercent(basePrice, discountPrice),
+			];
 		})
 		.catch(error => {
-			console.log(error);
+			console.error(error);
 		});
 };
 

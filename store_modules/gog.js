@@ -18,13 +18,12 @@ const getGOGAppId = async gogURL => {
 	await page.setRequestInterception(true);
 
 	page.on('request', req => {
-		const url = req.url();
-
 		// Blocking types of unneeded requests and some URLSs:
-		if (url.startsWith('https://www.youtube.com/') || blockedTypes.includes(req.resourceType())) {
+		if (req.url().startsWith('https://www.youtube.com/') || blockedTypes.includes(req.resourceType())) {
+			// ^ change to `includes('youtube')`?
 			req.abort();
 		} else {
-			//console.log(req.resourceType() + " = " + url);
+			//console.log(req.resourceType() + " = " + req.url());
 			req.continue();
 		}
 	});
@@ -45,10 +44,10 @@ const getPriceData = async gogURL => {
 	// Checking if cache file exists:
 	try {
 		if (fs.existsSync(cachePath)) {
-			const cacheJSON = JSON.parse(fs.readFileSync('cache.json'));
+			const [cacheJSON] = JSON.parse(fs.readFileSync('cache.json'));
 
 			// check if URL value changed:
-			if (gogURL != cacheJSON[0].url) {
+			if (gogURL !== cacheJSON.url) {
 				appId = await getGOGAppId(gogURL);
 
 				const output = `[
@@ -61,7 +60,7 @@ const getPriceData = async gogURL => {
 
 				fs.writeFileSync('cache.json', JSON.stringify(JSON.parse(output)));
 			} else {
-				appId = cacheJSON[0].data;
+				appId = cacheJSON.data;
 			}
 		} else {
 			appId = await getGOGAppId(gogURL);
@@ -72,7 +71,7 @@ const getPriceData = async gogURL => {
 					"url": "${gogURL}",
 					"data": "${appId}"
 				}
-      ]`;
+      		]`;
 
 			fs.writeFileSync('cache.json', JSON.stringify(JSON.parse(output)));
 		}
@@ -81,22 +80,32 @@ const getPriceData = async gogURL => {
 		return axios
 			.get(`https://api.gog.com/products/${appId}/prices?countryCode=pl`)
 			.then(responseJSON => {
-				// Getting general data:
-				const priceOverview = responseJSON.data._embedded.prices[0];
+				// Extracting price data:
+				const [
+					basePrice,
+					discountPrice,
+				] = Object.values(responseJSON['data']['_embedded']['prices'][0]).slice(1).map(el => el.slice(0, -4));
+				//  ^ converting object to array      removing first value (an object) ^      ^ initial formatting
 
-				// Getting specified data:
-				const basePrice = formatPrice(priceOverview['basePrice'].replace(' PLN', ''));
-				const discountPrice = formatPrice(priceOverview['finalPrice'].replace(' PLN', ''));
-				const discountPercent = calculateDiscountPercent(basePrice, discountPrice);
-
-				return [basePrice, discountPrice, discountPercent];
+				return [
+					formatPrice(basePrice),
+					formatPrice(discountPrice),
+					calculateDiscountPercent(basePrice, discountPrice),
+				];
 			})
 			.catch(error => {
-				console.log(error);
+				console.error(error);
 			});
-	} catch (err) {
-		console.error(err);
+	} catch (error) {
+		console.error(error);
 	}
 };
+
+/* Test:
+(async () => {
+	getPriceData('https://www.gog.com/en/game/fear_platinum');
+})();
+*/
+
 
 exports.getPriceData = getPriceData;
