@@ -1,7 +1,7 @@
 /*
-- https://steamdb.info/blog/store-prices-api/
-- https://nik-davis.github.io/posts/2019/steam-data-collection/
-- https://stackoverflow.com/questions/29591313/steam-api-grabbing-a-list-of-prices
+- <https://steamdb.info/blog/store-prices-api/>
+- <https://nik-davis.github.io/posts/2019/steam-data-collection/>
+- <https://stackoverflow.com/questions/29591313/steam-api-grabbing-a-list-of-prices/>
 */
 
 // Imports:

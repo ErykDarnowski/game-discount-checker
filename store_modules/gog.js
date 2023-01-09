@@ -1,4 +1,4 @@
-// gog api: https://gogapidocs.readthedocs.io/en/latest/
+// API -> <https://gogapidocs.readthedocs.io/en/latest/>
 
 // Imports:
 const fs = require('fs');
@@ -9,10 +9,10 @@ const { formatPrice, calculateDiscountPercent } = require('../common.js');
 
 
 const getGOGAppId = async gogURL => {
+	let appId;
 	const blockedTypes = ['xhr', 'font', 'ping', 'image', 'fetch', 'other', 'media', 'script', 'stylesheet'];
 	const browser = await puppeteer.launch({});
 	const page = await browser.newPage();
-	let appId = '';
 
 	await page.setCacheEnabled(false);
 	await page.setRequestInterception(true);
@@ -32,14 +32,14 @@ const getGOGAppId = async gogURL => {
 
 	appId = await page.evaluate(() => window.productcardData['cardProduct']['id']);
 
-	browser.close();
+	browser.close(); // await?
 
 	return appId;
 };
 
 const getPriceData = async gogURL => {
+	let appId;
 	const cachePath = './cache.json';
-	let appId = '';
 
 	// Checking if cache file exists:
 	try {
@@ -61,7 +61,7 @@ const getPriceData = async gogURL => {
 				fs.writeFileSync('cache.json', JSON.stringify(JSON.parse(output)));
 			} else {
 				appId = cacheJSON.data;
-			}
+			};
 		} else {
 			appId = await getGOGAppId(gogURL);
 
@@ -84,8 +84,10 @@ const getPriceData = async gogURL => {
 				const [
 					basePrice,
 					discountPrice,
-				] = Object.values(responseJSON['data']['_embedded']['prices'][0]).slice(1).map(el => el.slice(0, -4));
-				//  ^ converting object to array      removing first value (an object) ^      ^ initial formatting
+				] = Object.values(responseJSON['data']['_embedded']['prices'][0])
+					//  ^ converting object to array
+					.slice(1) // <- removing first value (an object)
+					.map(el => el.slice(0, -4)); // <- initial formatting (removing ` PLN`)
 
 				return [
 					formatPrice(basePrice),

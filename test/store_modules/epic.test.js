@@ -1,4 +1,4 @@
-// Imports
+// Imports:
 const { exec } = require('child_process');
 
 const getPriceData = require('../../store_modules/epic.js').getPriceData;

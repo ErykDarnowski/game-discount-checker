@@ -1,4 +1,4 @@
-// More colors: https://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-debug-ansi.html
+// More colors -> <https://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-debug-ansi.html>
 
 const start = '\x1b[';
 const end = start + '0m';

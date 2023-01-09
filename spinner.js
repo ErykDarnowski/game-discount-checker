@@ -1,5 +1,5 @@
 /*
-// https://raw.githubusercontent.com/sindresorhus/cli-spinners/00de8fbeee16fa49502fa4f687449f70f2c8ca2c/spinners.json
+// More spinners -> <https://raw.githubusercontent.com/sindresorhus/cli-spinners/00de8fbeee16fa49502fa4f687449f70f2c8ca2c/spinners.json>
 
 {
     // BRAIL FONT:

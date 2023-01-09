@@ -1,4 +1,4 @@
-// microsoft api github: https://github.com/ThomasPe/MS-Store-API
+// API -> <https://github.com/ThomasPe/MS-Store-API>
 
 // Imports:
 const axios = require('axios');

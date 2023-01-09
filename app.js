@@ -13,7 +13,7 @@ const microsoft = require('./store_modules/microsoft.js');
 // Starting execution timer:
 const startTime = performance.now();
 
-// Getting data from config.json:  [better json reading? https://stackabuse.com/reading-and-writing-json-files-with-node-js/]
+// Getting data from `config.json` (better json read approach? -> <https://stackabuse.com/reading-and-writing-json-files-with-node-js/>):
 const rawData = fs.readFileSync('config.json');
 const parsedData = JSON.parse(rawData);
 
@@ -68,7 +68,7 @@ const priceSpinner = new Spinner('@ Fetching prices');
 			// Filter out arrays where the discount price is higher than the cheapest one:
 			if (currPricesArr[2] === sortedPrices.at(-1)[2]) {
 				accumulatorArr.push(currPricesArr[0].toUpperCase()); // <- only get names of stores and format them
-			};
+			}
 
 			return accumulatorArr;
 		}, [])
@@ -140,10 +140,10 @@ const priceSpinner = new Spinner('@ Fetching prices');
 		},
 	};
 
-	// Printing stores + prices table:
+	// Printing stores and prices table:
 	console.log(`\n${table(tableData, tableConfig)}`);
 
-	// Printing how much you can save and where you should buy the game:
+	// Printing how much you can save and which store/s have the best price/s:
 	console.log(
 		`@ You can save: ${setColor(`${moneySaved} zł (${percentSaved}%)`, colors.highlightColor)} by buying the game on: ${setColor(`{${cheapestStores}}`, colors.store)}!`
 	);
