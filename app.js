@@ -64,11 +64,11 @@ const priceSpinner = new Spinner('@ Fetching prices');
 
 	// Getting names of store/s where the game is the cheapest:
 	const cheapestStores = sortedPrices
-		.reduce((accumulatorArr, currPricesArr) => {
+		.reduceRight((accumulatorArr, currPricesArr) => {
 			// Filter out arrays where the discount price is higher than the cheapest one:
 			if (currPricesArr[2] === sortedPrices.at(-1)[2]) {
 				accumulatorArr.push(currPricesArr[0].toUpperCase()); // <- only get names of stores and format them
-			}
+			};
 
 			return accumulatorArr;
 		}, [])
