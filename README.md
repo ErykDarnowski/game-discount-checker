@@ -27,20 +27,18 @@
 
 ## Description
 
-A simple CLI tool that scrapes game store websites to check if a game's price got discounted.
+A simple CLI tool that scrapes game store websites to check if a game's price got discounted and compares the result in a nice ASCII table!
 
 ---
 
 ### Instructions
 
 ```bash
-# 1. Install all packages:
-npm install
+# 1. Install all dependencies:
+npm i
 
-# 2. Configure settings and input store URLs in to config.js file
+# 2. Configure (set game URL for each store):
 code config.js
-
-# INSTALL / COPY FILES / ALIAS idk. (in /usr/bin)
 
 # 3. Use
 node app.js
@@ -48,11 +46,11 @@ node app.js
 
 ---
 
-### Couldn't have done it without these 😙
+### Credits
 
-- [MS-Store-API](https://github.com/ThomasPe/MS-Store-API) - API used in microsoft.js
-- [cli-spinner](https://github.com/sindresorhus/cli-spinners) - Animations used in spinner.js
-- [gogapidocs](https://github.com/Yepoleb/gogapidocs) - API used in gog.js
-- [puppeteer](https://github.com/puppeteer/puppeteer) - Helps in getting a game's ID in gog.js
+- [MS-Store-API](https://github.com/ThomasPe/MS-Store-API) - API used in `microsoft.js`
+- [cli-spinner](https://github.com/sindresorhus/cli-spinners) - Animations used in `spinner.js`
+- [gogapidocs](https://github.com/Yepoleb/gogapidocs) - API used in `gog.js`
+- [puppeteer](https://github.com/puppeteer/puppeteer) - Helps in getting a game's ID in `gog.js`
 - [axios](https://github.com/axios/axios) - Handles requests to all APIs
-- [table](https://github.com/gajus/table) - Prints table in app.js
+- [table](https://github.com/gajus/table) - Prints table in `app.js`
