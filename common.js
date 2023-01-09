@@ -5,10 +5,10 @@ const puppeteer = require('puppeteer');
 
 // Funcs:
 // Adds "." before 2 numbers from end [example: 10799 -> 107.99]:
+const formatPrice = priceInt => {
 	var priceArr = String(priceInt).split('');
 	return parseFloat(priceArr.slice(0, priceArr.length - 2).join('') + '.' + priceArr.slice(priceArr.length - 2, priceArr.length).join(''));
 }
-const formatPrice = priceInt => {
 
 // Changes "," in price str to "." and formats it to a float:
 const formatPriceToFloat = price => {

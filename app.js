@@ -60,6 +60,7 @@ const priceSpinner = new Spinner('@ Fetching prices');
 	const cheapestStores = sortedPrices
 		.filter(el => el[2] === sortedPrices[sortedPrices.length - 1][2]) // <- filter out values that are more expensive than cheapest one
 		.map(el => el[0].toUpperCase()) // <- only get names of stores and make them upper case
+		.reverse()
 		.join(' | '); // <- add nice join formatting
 
 	// Formatting the values and populating the table data:
