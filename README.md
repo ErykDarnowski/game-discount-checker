@@ -22,7 +22,7 @@
 </p>
 
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/81530705/210632291-92195995-7122-49a4-b326-f7bd0e71f1c5.png"></img>
+    <img src="https://user-images.githubusercontent.com/81530705/211243757-c71254a1-58ff-488f-bb40-c6a417f08656.png"></img>
 </p>
 
 ## Description
@@ -37,7 +37,7 @@ A simple CLI tool that scrapes game store websites to check if a game's price go
 # 1. Install all dependencies:
 npm i
 
-# 2. Configure (set game URL for each store):
+# 2. Configure (set game URL for each store - currently only Polish ones work):
 code config.js
 
 # 3. Use
