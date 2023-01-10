@@ -3,7 +3,7 @@
 // Imports:
 const axios = require('axios');
 
-const { formatPriceToFloat, calculateDiscountPercent } = require('../common.js');
+const { calculatePercent } = require('../common.js');
 
 
 const getPriceData = async microsoft_URL => {
@@ -28,9 +28,9 @@ const getPriceData = async microsoft_URL => {
 			} = responseJSON['data']['Products'][0]['DisplaySkuAvailabilities'][0]['Availabilities'][0]['OrderManagementData']['Price'];
 
 			return [
-				formatPriceToFloat(basePrice),
-				formatPriceToFloat(discountPrice),
-				calculateDiscountPercent(basePrice, discountPrice),
+				basePrice,
+				discountPrice,
+				calculatePercent(basePrice, discountPrice),
 			];
 		})
 		.catch(error => {

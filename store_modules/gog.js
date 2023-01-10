@@ -5,7 +5,7 @@ const fs = require('fs');
 const axios = require('axios');
 const puppeteer = require('puppeteer');
 
-const { formatPrice, calculateDiscountPercent } = require('../common.js');
+const { formatPrice, calculatePercent } = require('../common.js');
 
 
 const getGOGAppId = async gogURL => {
@@ -92,7 +92,7 @@ const getPriceData = async gogURL => {
 				return [
 					formatPrice(basePrice),
 					formatPrice(discountPrice),
-					calculateDiscountPercent(basePrice, discountPrice),
+					calculatePercent(basePrice, discountPrice),
 				];
 			})
 			.catch(error => {

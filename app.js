@@ -2,6 +2,7 @@
 const fs = require('fs');
 const { table } = require('table');
 
+const { calculatePercent } = require('./common.js');
 const { setColor, colors } = require('./colors.js');
 const { Spinner } = require('./spinner.js');
 const gog = require('./store_modules/gog.js');
@@ -60,7 +61,7 @@ const priceSpinner = new Spinner('@ Fetching prices');
 	const highestPrice = sortedPrices[0][2];
 
 	// Getting percent of money saved:
-	const percentSaved = Math.round((moneySaved * 100) / highestPrice);
+	const percentSaved = calculatePercent(moneySaved, highestPrice, true);
 
 	// Getting names of store/s where the game is the cheapest:
 	const cheapestStores = sortedPrices

@@ -1,8 +1,6 @@
 // Imports:
 const puppeteer = require('puppeteer');
 
-const { formatPriceToFloat } = require('../common.js');
-
 
 const getPriceData = async epicURL => {
 	// Puppeteer setup:
@@ -39,7 +37,7 @@ const getPriceData = async epicURL => {
 	browser.close(); // await?
 
 	// Extracting price data:
-	let pricesArray = pricesString.match(new RegExp('[0-9,?]{1,}', 'g')).map(el => formatPriceToFloat(el));
+	let pricesArray = pricesString.match(new RegExp('[0-9,?]{1,}', 'g')).map(el => parseFloat(el.replace(',', '.')));
 
 	// Different formatting if game is NOT discounted:
 	pricesArray = pricesArray.length === 1 ? [0, pricesArray[0], pricesArray[0]] : pricesArray;
